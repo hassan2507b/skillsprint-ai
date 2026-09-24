@@ -1,0 +1,8 @@
+APEX LOGISTICS - CONFLICTING CASE 3: PROBATION PERIOD
+Document ID: DOC-CONF-003
+Topic: Probationary Period Duration
+
+CONFLICT DETAILS:
+Section A (Company Handbook DOC-001): "New hires undergo a standard probationary period of 90 days (3 months)."
+Section B (Technical Onboarding Guide DOC-TECH-01): "Engineers, analysts, and supervisors are subject to an extended 180-day (6 months) mandatory probation before benefits vest."
+CONTRADICTION: Probation length is 90 days vs 180 days depending on document consulted.

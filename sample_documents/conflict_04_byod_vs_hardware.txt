@@ -1,0 +1,8 @@
+APEX LOGISTICS - CONFLICTING CASE 4: BYOD vs HARDWARE POLICY
+Document ID: DOC-CONF-004
+Topic: Personal Device Usage (BYOD)
+
+CONFLICT DETAILS:
+Section A (Mobile Device Guidelines DOC-IT-05): "Employees may use personal smartphones and laptops for work provided Mobile Device Management (MDM) software is installed."
+Section B (Information Security Standard DOC-SEC-02): "Personal devices (BYOD) are strictly prohibited from connecting to company databases or accessing corporate email."
+CONTRADICTION: IT guidelines permit BYOD with MDM, while InfoSec guidelines strictly prohibit BYOD.

@@ -1,0 +1,8 @@
+APEX LOGISTICS - CONFLICTING CASE 5: DRESS CODE & UNIFORM
+Document ID: DOC-CONF-005
+Topic: Attire Requirements
+
+CONFLICT DETAILS:
+Section A (Corporate Handbook DOC-001): "Business casual attire is required for all personnel across all company facilities at all times."
+Section B (Warehouse Safety Protocol DOC-SAF-02): "Industrial safety coveralls, high-visibility neon vests, and steel-toe boots are mandatory for anyone entering facility grounds."
+CONTRADICTION: Business casual dress code directly conflicts with mandatory industrial safety uniform requirements.

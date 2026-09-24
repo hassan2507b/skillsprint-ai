@@ -1,0 +1,8 @@
+APEX LOGISTICS - CONFLICTING CASE 9: EXPENSE APPROVAL AUTHORIZATION
+Document ID: DOC-CONF-009
+Topic: Managerial Spending Thresholds
+
+CONFLICT DETAILS:
+Section A (Finance Delegation Matrix DOC-FIN-01): "Direct Supervisors and Team Leads are authorized to approve operational expenses up to $1,000."
+Section B (Procurement Controls Policy DOC-PRO-03): "Field supervisor approval authority is capped at $250; any expenditure above $250 requires Director authorization."
+CONTRADICTION: Supervisor approval limit is $1,000 in Finance vs $250 in Procurement.

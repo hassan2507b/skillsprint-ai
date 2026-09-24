@@ -1,0 +1,9 @@
+APEX LOGISTICS - DATA PRIVACY POLICY
+Document ID: DOC-POL-007
+Version: 1.0 (Effective 2019-01-01, DEPRECATED)
+
+1. Customer Data Retention
+Customer shipping records and personally identifiable information (PII) are retained for 7 years.
+
+2. Data Access
+All internal staff are granted default access to customer contact address databases.

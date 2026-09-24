@@ -1,0 +1,9 @@
+APEX LOGISTICS - DATA PRIVACY POLICY
+Document ID: DOC-POL-007
+Version: 2.0 (Effective 2024-05-01, CURRENT ACTIVE VERSION)
+
+1. Customer Data Retention
+Customer PII must be purged/anonymized after 2 years unless active litigation exists (GDPR & CCPA compliance).
+
+2. Data Access
+Customer PII access is restricted strictly on a Need-to-Know basis via role-based access control (RBAC).

@@ -1,0 +1,9 @@
+APEX LOGISTICS - EQUIPMENT STIPEND POLICY
+Document ID: DOC-POL-008
+Version: 1.0 (Effective 2022-01-01, DEPRECATED)
+
+1. Initial Allocation
+Software engineers and data analysts receive a $200 hardware voucher upon hiring.
+
+2. Upgrade Frequency
+Hardware upgrades are available every 4 years.

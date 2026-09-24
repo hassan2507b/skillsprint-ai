@@ -1,0 +1,8 @@
+APEX LOGISTICS - CONFLICTING CASE 6: OVERTIME PAY RATE
+Document ID: DOC-CONF-006
+Topic: Overtime Compensation Calculation
+
+CONFLICT DETAILS:
+Section A (HR Benefits Handbook DOC-HR-02): "All overtime beyond 40 hours per week is compensated at 1.5 times (150%) the standard hourly wage."
+Section B (Payroll Operating Procedure DOC-FIN-08): "Weekend overtime hours are compensated at a flat rate of 1.25 times (125%) base salary."
+CONTRADICTION: Overtime rate multiplier differs between HR Handbook (1.5x) and Payroll SOP (1.25x).

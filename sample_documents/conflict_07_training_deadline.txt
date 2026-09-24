@@ -1,0 +1,8 @@
+APEX LOGISTICS - CONFLICTING CASE 7: MANDATORY TRAINING DEADLINE
+Document ID: DOC-CONF-007
+Topic: Onboarding Compliance Completion Timeframe
+
+CONFLICT DETAILS:
+Section A (Corporate Compliance Charter DOC-CMP-01): "Mandatory safety & security onboarding modules must be completed within 7 calendar days of start date."
+Section B (Departmental Orientation Guide DOC-DEPT-03): "New hires have up to 30 calendar days to complete online compliance training."
+CONTRADICTION: Compliance deadline is 7 days vs 30 days.

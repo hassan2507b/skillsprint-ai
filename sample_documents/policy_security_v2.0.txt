@@ -1,0 +1,13 @@
+APEX LOGISTICS - SECURITY POLICY
+Document ID: DOC-POL-002
+Version: 2.0 (Effective 2024-09-01, CURRENT ACTIVE VERSION)
+Status: Replaces Version 1.0
+
+1. Password Standards
+All employee account passwords must be at least 16 characters long. Periodic mandatory resets are eliminated in favor of passphrase complexity and leak monitoring.
+
+2. Multi-Factor Authentication (MFA)
+MFA is strictly mandatory for ALL logins (both internal and remote) using hardware tokens or authenticator apps.
+
+3. USB Storage Media
+Removable USB drives are strictly blocked and prohibited on all corporate laptops and endpoints.

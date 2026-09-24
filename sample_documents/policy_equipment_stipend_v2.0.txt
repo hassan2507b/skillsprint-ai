@@ -1,0 +1,9 @@
+APEX LOGISTICS - EQUIPMENT STIPEND POLICY
+Document ID: DOC-POL-008
+Version: 2.0 (Effective 2025-01-01, CURRENT ACTIVE VERSION)
+
+1. Initial Allocation
+Software engineers and data analysts receive a $500 hardware & ergonomic equipment voucher upon hiring.
+
+2. Upgrade Frequency
+Hardware refresh cycles are shortened to every 2 years for technical and analytics roles.

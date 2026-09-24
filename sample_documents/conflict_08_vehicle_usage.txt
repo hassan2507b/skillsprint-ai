@@ -1,0 +1,8 @@
+APEX LOGISTICS - CONFLICTING CASE 8: COMPANY VEHICLE USAGE
+Document ID: DOC-CONF-008
+Topic: Delivery Van Off-Duty Use
+
+CONFLICT DETAILS:
+Section A (Fleet Logistics SOP DOC-FLT-01): "Delivery drivers are permitted to drive assigned company vans for personal home commuting."
+Section B (Corporate Risk & Insurance Policy DOC-RSK-04): "Company vehicles must remain parked at secure company depots outside duty hours. Off-duty personal use is strictly prohibited."
+CONTRADICTION: Fleet SOP permits commuting in fleet vans, while Insurance Policy strictly forbids off-duty use.

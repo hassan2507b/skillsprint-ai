@@ -1,0 +1,8 @@
+APEX LOGISTICS - CONFLICTING CASE 10: DATA SENSITIVITY CLASSIFICATION
+Document ID: DOC-CONF-010
+Topic: Compensation & Salary Transparency Classification
+
+CONFLICT DETAILS:
+Section A (Data Transparency Policy DOC-GOV-02): "Employee compensation bands and pay structures are classified as Level 1 Public Internal and readable by all staff."
+Section B (Data Security Policy DOC-SEC-01): "Payroll data and salary structures are strictly Level 4 Restricted Confidential; unauthorized viewing is a disciplinary violation."
+CONTRADICTION: Compensation data is classified as Public Internal in Data Transparency vs Restricted Confidential in Data Security.

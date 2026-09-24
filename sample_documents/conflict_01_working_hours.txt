@@ -1,0 +1,8 @@
+APEX LOGISTICS - CONFLICTING CASE 1: WORKING HOURS
+Document ID: DOC-CONF-001
+Topic: Work Schedules & Shift Timing
+
+CONFLICT DETAILS:
+Section A (Employee Handbook DOC-001): "Standard working hours for all company personnel are 9:00 AM to 5:00 PM, Monday through Friday."
+Section B (Warehouse & Ops Manual DOC-OPS-10): "All logistics, driver, and warehouse personnel must report for shift commencement at 8:00 AM sharp without exception."
+CONTRADICTION: Shift start time differs by 1 hour between General Handbook and Operations Manual.

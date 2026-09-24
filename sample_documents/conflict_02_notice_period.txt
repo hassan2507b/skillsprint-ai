@@ -1,0 +1,8 @@
+APEX LOGISTICS - CONFLICTING CASE 2: NOTICE PERIOD
+Document ID: DOC-CONF-002
+Topic: Employee Termination Notice
+
+CONFLICT DETAILS:
+Section A (HR Policy Guide DOC-HR-04): "All full-time and part-time employees must provide a minimum of 30 calendar days written notice prior to resignation."
+Section B (Employment Offer Framework DOC-HR-09): "Standard notice period during and after probation is 14 calendar days."
+CONTRADICTION: Required resignation notice period is 30 days in HR Policy Guide vs 14 days in Employment Offer Framework.

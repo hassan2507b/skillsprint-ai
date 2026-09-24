@@ -1,0 +1,9 @@
+APEX LOGISTICS - TRAVEL & EXPENSE POLICY
+Document ID: DOC-POL-004
+Version: 1.0 (Effective 2021-01-01, DEPRECATED)
+
+1. Meal Allowances
+Daily per diem allowance is capped at $50 per day for domestic travel.
+
+2. Receipt Threshold
+Receipts are required only for business expenses exceeding $75.

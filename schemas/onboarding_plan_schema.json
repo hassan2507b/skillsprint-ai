@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "required": [
+    "employee_role",
+    "company",
+    "onboarding_plan",
+    "training_requirements",
+    "contradictions",
+    "security_warnings",
+    "summary"
+  ],
+  "properties": {
+    "employee_role": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "onboarding_plan": {
+      "type": "array"
+    },
+    "training_requirements": {
+      "type": "array"
+    },
+    "contradictions": {
+      "type": "array"
+    },
+    "security_warnings": {
+      "type": "array"
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "total_requirements",
+        "mandatory_requirements",
+        "contradictions_found",
+        "security_warnings_found"
+      ]
+    }
+  }
+}
