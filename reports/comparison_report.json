@@ -1,0 +1,116 @@
+{
+  "title": "SkillSprint AI vs Python Engine Comparison Report",
+  "total_roles_evaluated": 10,
+  "comparison_details": [
+    {
+      "role": "HR Manager",
+      "genai_total_requirements": 2,
+      "genai_mandatory_requirements": 2,
+      "python_coverage_score": "100.0%",
+      "python_traceability_score": "100.0%",
+      "contradictions_found_by_ai": 5,
+      "security_warnings_found_by_ai": 5,
+      "validation_status": "Verified with High Vigilance",
+      "missing_trainings": []
+    },
+    {
+      "role": "Delivery Driver",
+      "genai_total_requirements": 2,
+      "genai_mandatory_requirements": 2,
+      "python_coverage_score": "100.0%",
+      "python_traceability_score": "100.0%",
+      "contradictions_found_by_ai": 5,
+      "security_warnings_found_by_ai": 5,
+      "validation_status": "Verified with High Vigilance",
+      "missing_trainings": []
+    },
+    {
+      "role": "Warehouse Supervisor",
+      "genai_total_requirements": 2,
+      "genai_mandatory_requirements": 2,
+      "python_coverage_score": "100.0%",
+      "python_traceability_score": "100.0%",
+      "contradictions_found_by_ai": 5,
+      "security_warnings_found_by_ai": 5,
+      "validation_status": "Verified with High Vigilance",
+      "missing_trainings": []
+    },
+    {
+      "role": "Software Engineer",
+      "genai_total_requirements": 2,
+      "genai_mandatory_requirements": 2,
+      "python_coverage_score": "100.0%",
+      "python_traceability_score": "100.0%",
+      "contradictions_found_by_ai": 5,
+      "security_warnings_found_by_ai": 5,
+      "validation_status": "Verified with High Vigilance",
+      "missing_trainings": []
+    },
+    {
+      "role": "Data Analyst",
+      "genai_total_requirements": 2,
+      "genai_mandatory_requirements": 2,
+      "python_coverage_score": "100.0%",
+      "python_traceability_score": "100.0%",
+      "contradictions_found_by_ai": 5,
+      "security_warnings_found_by_ai": 5,
+      "validation_status": "Verified with High Vigilance",
+      "missing_trainings": []
+    },
+    {
+      "role": "Sales Executive",
+      "genai_total_requirements": 2,
+      "genai_mandatory_requirements": 2,
+      "python_coverage_score": "100.0%",
+      "python_traceability_score": "100.0%",
+      "contradictions_found_by_ai": 5,
+      "security_warnings_found_by_ai": 5,
+      "validation_status": "Verified with High Vigilance",
+      "missing_trainings": []
+    },
+    {
+      "role": "Customer Support",
+      "genai_total_requirements": 2,
+      "genai_mandatory_requirements": 2,
+      "python_coverage_score": "100.0%",
+      "python_traceability_score": "100.0%",
+      "contradictions_found_by_ai": 5,
+      "security_warnings_found_by_ai": 5,
+      "validation_status": "Verified with High Vigilance",
+      "missing_trainings": []
+    },
+    {
+      "role": "Security Officer",
+      "genai_total_requirements": 2,
+      "genai_mandatory_requirements": 2,
+      "python_coverage_score": "100.0%",
+      "python_traceability_score": "100.0%",
+      "contradictions_found_by_ai": 5,
+      "security_warnings_found_by_ai": 5,
+      "validation_status": "Verified with High Vigilance",
+      "missing_trainings": []
+    },
+    {
+      "role": "Finance Manager",
+      "genai_total_requirements": 2,
+      "genai_mandatory_requirements": 2,
+      "python_coverage_score": "100.0%",
+      "python_traceability_score": "100.0%",
+      "contradictions_found_by_ai": 5,
+      "security_warnings_found_by_ai": 5,
+      "validation_status": "Verified with High Vigilance",
+      "missing_trainings": []
+    },
+    {
+      "role": "Marketing Lead",
+      "genai_total_requirements": 2,
+      "genai_mandatory_requirements": 2,
+      "python_coverage_score": "100.0%",
+      "python_traceability_score": "100.0%",
+      "contradictions_found_by_ai": 5,
+      "security_warnings_found_by_ai": 5,
+      "validation_status": "Verified with High Vigilance",
+      "missing_trainings": []
+    }
+  ]
+}
