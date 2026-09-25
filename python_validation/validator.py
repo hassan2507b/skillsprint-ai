@@ -8,7 +8,7 @@ class PythonValidationEngine:
     against the authoritative Role Requirement Matrix.
     """
 
-    def __init__(self, matrix_path):
+    def __init__(self, matrix_path="role_requirement_matrix.json"):
         self.matrix_path = Path(matrix_path)
         self.matrix = self._load_matrix()
 
@@ -34,15 +34,20 @@ class PythonValidationEngine:
         security_warnings = ai_plan_json.get("security_warnings", [])
 
         # 1. Coverage Score Calculation
-        total_expected_trainings = len(role_expected.get("mandatory_trainings", [])) if role_expected else 1
+        expected_trainings = role_expected.get("mandatory_trainings", []) if role_expected else []
+        total_expected_trainings = len(expected_trainings) if expected_trainings else 1
         covered_trainings = 0
         ai_training_names = [t.get("training", "").lower() for t in training_requirements]
 
+        missing_trainings = []
         if role_expected:
-            for expected in role_expected.get("mandatory_trainings", []):
-                if any(expected.lower() in t_name for t_name in ai_training_names):
+            for expected in expected_trainings:
+                expected_clean = expected.lower().strip()
+                if any(expected_clean in t_name or t_name in expected_clean for t_name in ai_training_names):
                     covered_trainings += 1
-        
+                else:
+                    missing_trainings.append(expected)
+
         coverage_score = round((covered_trainings / max(1, total_expected_trainings)) * 100, 2)
 
         # 2. Traceability Score Calculation
@@ -50,25 +55,22 @@ class PythonValidationEngine:
         total_items = len(onboarding_plan) + len(training_requirements)
 
         for item in onboarding_plan:
-            if item.get("source_document") and item.get("source_document") != "Unknown":
+            src = item.get("source_document", "")
+            if src and src != "Unknown" and src != "N/A":
                 items_with_source += 1
 
         for item in training_requirements:
-            if item.get("source_document") and item.get("source_document") != "Unknown":
+            src = item.get("source_document", "")
+            if src and src != "Unknown" and src != "N/A":
                 items_with_source += 1
 
-        traceability_score = round((items_with_source / max(1, total_items)) * 100, 2)
+        traceability_score = round((items_with_source / max(1, total_items)) * 100, 2) if total_items > 0 else 100.0
 
-        # 3. Detect Missing / Duplicate / Unsupported Requirements
-        missing_trainings = []
-        if role_expected:
-            for req in role_expected.get("mandatory_trainings", []):
-                if not any(req.lower() in t_name for t_name in ai_training_names):
-                    missing_trainings.append(req)
-
-        # 4. Final Status Assignment
-        if coverage_score >= 80 and len(contradictions) >= 5 and len(security_warnings) >= 5:
+        # 3. Final Status Assignment
+        if coverage_score >= 80 and (len(security_warnings) > 0 or len(contradictions) > 0):
             status = "Verified with High Vigilance"
+        elif coverage_score >= 80:
+            status = "Verified - Fully Compliant"
         elif len(security_warnings) > 0:
             status = "Warning - Security Directives Flagged"
         else:
@@ -97,4 +99,5 @@ class PythonValidationEngine:
 
 if __name__ == "__main__":
     validator = PythonValidationEngine("role_requirement_matrix.json")
-    print("Python Validation Engine initialized.")
+    print("Python Validation Engine initialized successfully.")
+

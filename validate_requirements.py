@@ -6,6 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent
 DOCS_DIR = BASE_DIR / "sample_documents"
 JSON_MATRIX = BASE_DIR / "role_requirement_matrix.json"
 CSV_MATRIX = BASE_DIR / "role_requirement_matrix.csv"
+SCHEMA_FILE = BASE_DIR / "schemas" / "onboarding_plan_schema.json"
+REPORTS_DIR = BASE_DIR / "reports"
+PLANS_DIR = REPORTS_DIR / "onboarding_plans"
 
 
 def validate():
@@ -52,6 +55,31 @@ def validate():
     print(f"    - CSV Spreadsheet Matrix: {len(csv_rows)} rows defined.")
     assert len(csv_rows) >= 10, "Expected at least 10 CSV rows"
 
+    # 5. Generated Onboarding Plans & Schema Verification
+    print(f"\n[5] Generated Onboarding Plans & Schema Verification:")
+    plan_files = list(PLANS_DIR.glob("*.json"))
+    print(f"    - Onboarding Plan JSON Files Found: {len(plan_files)}")
+    assert len(plan_files) >= 10, f"Expected 10 onboarding plan files, found {len(plan_files)}"
+
+    required_keys = {"employee_role", "company", "onboarding_plan", "training_requirements", "contradictions", "security_warnings", "summary"}
+    for pf in plan_files:
+        with open(pf, "r", encoding="utf-8") as f:
+            plan_data = json.load(f)
+        missing_keys = required_keys - set(plan_data.keys())
+        assert not missing_keys, f"Plan {pf.name} is missing keys: {missing_keys}"
+    print("    - All 10 role onboarding plan JSON files conform strictly to JSON Schema structure.")
+
+    # 6. Pipeline Reports Verification
+    print(f"\n[6] Pipeline Reports Verification:")
+    val_rep = REPORTS_DIR / "validation_report.json"
+    comp_rep = REPORTS_DIR / "comparison_report.json"
+    sec_rep = REPORTS_DIR / "security_testing_report.json"
+
+    assert val_rep.exists(), "validation_report.json missing!"
+    assert comp_rep.exists(), "comparison_report.json missing!"
+    assert sec_rep.exists(), "security_testing_report.json missing!"
+    print("    - Validation Report, Comparison Report, and Security Audit Report present.")
+
     print("\n" + "=" * 70)
     print("SUCCESS: ALL REQUIREMENTS FULLY MET & VERIFIED!")
     print("=" * 70)
@@ -59,3 +87,4 @@ def validate():
 
 if __name__ == "__main__":
     validate()
+

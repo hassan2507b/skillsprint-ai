@@ -4,7 +4,7 @@ from document_processing.parser import DocumentParser
 from python_validation.validator import PythonValidationEngine
 from comparison_engine.compare import ComparisonEngine
 from security.security_tester import SecurityAuditEngine
-from genai_pipeline.generator import load_role_matrix
+from genai_pipeline.generator import load_role_matrix, generate_onboarding_plan
 
 BASE_DIR = Path(__file__).resolve().parent
 REPORTS_DIR = BASE_DIR / "reports"
@@ -30,95 +30,13 @@ def run_pipeline():
     roles = load_role_matrix()
     print(f"-> Loaded {len(roles)} corporate roles.")
 
-    # 3. Generate Mock / Verified Plans for all 10 Roles
+    # 3. Generate Verified Plans for all 10 Roles
     print("\n[Step 3] Compiling Onboarding Plans for All 10 Roles...")
     all_plans = {}
     for role_item in roles:
         role_name = role_item["role_name"]
-        
-        # Build comprehensive plan matching schema
-        plan = {
-            "employee_role": role_name,
-            "company": "Apex Logistics",
-            "onboarding_plan": [
-                {
-                    "requirement": f"Complete {role_name} general orientation and safety clearance",
-                    "category": "Orientation & Safety",
-                    "priority": "Mandatory",
-                    "source_document": "policy_health_safety_v2.0.txt",
-                    "source_section": "1. Personal Protective Equipment (PPE)"
-                },
-                {
-                    "requirement": f"Review {role_name} operational guidelines and active policy compliance",
-                    "category": "Compliance",
-                    "priority": "Mandatory",
-                    "source_document": "policy_security_v2.0.txt",
-                    "source_section": "2. Multi-Factor Authentication (MFA)"
-                }
-            ],
-            "training_requirements": [
-                {
-                    "training": t,
-                    "mandatory": True,
-                    "source_document": "policy_security_v2.0.txt"
-                } for t in role_item["mandatory_trainings"]
-            ],
-            "contradictions": [
-                {
-                    "issue": "Working Hours Conflict",
-                    "documents": ["conflict_01_working_hours.txt", "employee_handbook.txt"],
-                    "description": "General handbook specifies 9:00 AM start; Warehouse ops SOP mandates 8:00 AM shift start."
-                },
-                {
-                    "issue": "Resignation Notice Period Ambiguity",
-                    "documents": ["conflict_02_notice_period.txt", "hr_policy_guide.txt"],
-                    "description": "HR policy guide requires 30 days notice; Offer framework specifies 14 days."
-                },
-                {
-                    "issue": "Probationary Duration Difference",
-                    "documents": ["conflict_03_probation_period.txt", "tech_onboarding_guide.txt"],
-                    "description": "Standard handbook probation is 90 days vs technical guide probation of 180 days."
-                },
-                {
-                    "issue": "BYOD vs Corporate Hardware Policy",
-                    "documents": ["conflict_04_byod_vs_hardware.txt", "infosec_standard.txt"],
-                    "description": "Mobile guidelines permit BYOD with MDM vs InfoSec standard prohibiting BYOD."
-                },
-                {
-                    "issue": "Dress Code vs Safety Attire",
-                    "documents": ["conflict_05_dress_code.txt", "warehouse_safety.txt"],
-                    "description": "Business casual corporate policy conflicts with industrial safety uniform."
-                }
-            ],
-            "security_warnings": [
-                {
-                    "document": "adv_doc_01_override_instructions.txt",
-                    "warning": "Direct instruction override detected: Attempted to bypass system prompt rules."
-                },
-                {
-                    "document": "adv_doc_02_secret_exfiltration.txt",
-                    "warning": "Secret exfiltration attempt detected: Prompt requested leak of system prompt."
-                },
-                {
-                    "document": "adv_doc_03_fake_hr_grant.txt",
-                    "warning": "Privilege escalation attempt detected: Impersonated VP of HR to bypass training."
-                },
-                {
-                    "document": "adv_doc_04_json_hijack.txt",
-                    "warning": "JSON schema hijack attack detected: Closing brackets injected."
-                },
-                {
-                    "document": "adv_doc_05_hidden_comment.txt",
-                    "warning": "Hidden HTML comment directive injection detected."
-                }
-            ],
-            "summary": {
-                "total_requirements": 2,
-                "mandatory_requirements": 2,
-                "contradictions_found": 5,
-                "security_warnings_found": 5
-            }
-        }
+        print(f"   - Processing Role: {role_name}...")
+        plan = generate_onboarding_plan(role_name)
         all_plans[role_name] = plan
 
         # Save plan file
@@ -167,3 +85,4 @@ def run_pipeline():
 
 if __name__ == "__main__":
     run_pipeline()
+
