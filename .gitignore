@@ -15,10 +15,14 @@ dist/
 # Environment Variables (Keep API keys private)
 .env
 
-# Python Cache
+# Python Cache & Testing
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache/
+*.db
+*.db-wal
+*.db-shm
 
 # IDE & Editor files
 .vscode/
