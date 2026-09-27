@@ -145,7 +145,7 @@ export const EmployeeDetails = () => {
                   <div className="text-[10px] text-slate-400 font-semibold uppercase">Traceability Score</div>
                 </div>
                 <div className="bg-slate-800/40 p-3.5 rounded-xl border border-slate-700/60 text-center">
-                  <div className="text-xl font-bold text-indigo-400">{plan.consistency_score || 95}%</div>
+                  <div className="text-xl font-bold text-indigo-400">{plan.consistency_score || 0}%</div>
                   <div className="text-[10px] text-slate-400 font-semibold uppercase">Consistency Score</div>
                 </div>
               </div>

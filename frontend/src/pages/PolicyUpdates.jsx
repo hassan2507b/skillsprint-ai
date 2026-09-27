@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { policyService } from '../services/api';
+import React, { useEffect, useState } from 'react';
+import { policyService, documentService } from '../services/api';
 import {
   RefreshCw,
   AlertTriangle,
@@ -12,15 +12,33 @@ import {
 } from 'lucide-react';
 
 export const PolicyUpdates = () => {
-  const [docCode, setDocCode] = useState('DOC-POL-006');
+  const [documents, setDocuments] = useState([]);
+  const [docCode, setDocCode] = useState('');
   const [newVersion, setNewVersion] = useState('2.0');
   const [impactData, setImpactData] = useState(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [regenerating, setRegenerating] = useState(false);
   const [regenResult, setRegenResult] = useState(null);
 
+  useEffect(() => {
+    const fetchDocs = async () => {
+      try {
+        const res = await documentService.getAll();
+        const docs = res.data.documents || [];
+        setDocuments(docs);
+        if (docs.length > 0) {
+          setDocCode(docs[0].doc_code);
+        }
+      } catch (err) {
+        console.error('Failed to load documents for policy updates:', err);
+      }
+    };
+    fetchDocs();
+  }, []);
+
   const handleRunImpactAnalysis = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
+    if (!docCode) return;
     try {
       setAnalyzing(true);
       setRegenResult(null);
@@ -37,6 +55,7 @@ export const PolicyUpdates = () => {
   };
 
   const handleSelectiveRegenerate = async () => {
+    if (!docCode) return;
     try {
       setRegenerating(true);
       const res = await policyService.selectiveRegenerate({
@@ -45,7 +64,7 @@ export const PolicyUpdates = () => {
       });
       setRegenResult(res.data);
       // Refresh impact data
-      handleRunImpactAnalysis(new Event('submit'));
+      handleRunImpactAnalysis({});
     } catch (err) {
       alert(err.response?.data?.detail || 'Selective regeneration failed');
     } finally {
@@ -80,12 +99,15 @@ export const PolicyUpdates = () => {
               onChange={(e) => setDocCode(e.target.value)}
               className="w-full px-3.5 py-2.5 bg-slate-950/70 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500 font-mono"
             >
-              <option value="DOC-POL-006">DOC-POL-006 (Travel & Expense Policy)</option>
-              <option value="DOC-POL-002">DOC-POL-002 (Information Security & MFA)</option>
-              <option value="DOC-POL-001">DOC-POL-001 (Code of Conduct & Gifts)</option>
-              <option value="DOC-POL-003">DOC-POL-003 (Data Privacy & GDPR)</option>
-              <option value="DOC-POL-004">DOC-POL-004 (Remote Work & BYOD)</option>
-              <option value="DOC-POL-005">DOC-POL-005 (Health & Safety SOP)</option>
+              {documents.length === 0 ? (
+                <option value="">No documents uploaded yet</option>
+              ) : (
+                documents.map((d) => (
+                  <option key={d.id} value={d.doc_code}>
+                    {d.doc_code} ({d.title})
+                  </option>
+                ))
+              )}
             </select>
           </div>
 
@@ -101,8 +123,8 @@ export const PolicyUpdates = () => {
 
           <button
             type="submit"
-            disabled={analyzing}
-            className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
+            disabled={analyzing || !docCode}
+            className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
           >
             {analyzing ? 'Scanning Repositories...' : 'Execute Impact Analysis'}
           </button>
@@ -137,7 +159,7 @@ export const PolicyUpdates = () => {
           <div className="glass-panel p-6 bg-amber-950/20 border-amber-800/40 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-sm font-bold text-amber-300">Selective Regeneration Required</h3>
+                <h3 className="text-sm font-bold text-amber-300">Selective Regeneration</h3>
                 <p className="text-xs text-slate-300 mt-0.5">
                   Regenerates ONLY the {impactData.total_affected_modules} affected modules without invalidating unchanged training tracks.
                 </p>
@@ -165,17 +187,21 @@ export const PolicyUpdates = () => {
           <div className="glass-panel p-6 space-y-3">
             <h3 className="text-xs font-bold uppercase text-slate-400">Affected Learning Modules Breakdown</h3>
             <div className="divide-y divide-slate-800">
-              {(impactData.affected_modules || []).map((m) => (
-                <div key={m.id} className="py-3 flex items-center justify-between text-xs">
-                  <div>
-                    <div className="font-bold text-white">{m.title}</div>
-                    <div className="text-[11px] text-slate-400">
-                      Employee: <strong className="text-slate-200">{m.employee_name}</strong> • Role: {m.role_name} • Stage: {m.stage}
+              {(impactData.affected_modules || []).length === 0 ? (
+                <p className="py-4 text-center text-xs text-slate-500">No active learning modules are affected by this update.</p>
+              ) : (
+                (impactData.affected_modules || []).map((m) => (
+                  <div key={m.id} className="py-3 flex items-center justify-between text-xs">
+                    <div>
+                      <div className="font-bold text-white">{m.title}</div>
+                      <div className="text-[11px] text-slate-400">
+                        Employee: <strong className="text-slate-200">{m.employee_name}</strong> • Role: {m.role_name} • Stage: {m.stage}
+                      </div>
                     </div>
+                    <span className="font-mono text-indigo-400 font-bold">{m.module_code}</span>
                   </div>
-                  <span className="font-mono text-indigo-400 font-bold">{m.module_code}</span>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>

@@ -40,7 +40,7 @@ export const ComparisonResults = () => {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-indigo-400 font-medium text-xs animate-pulse">
-          Computing requirement-level GenAI vs Python Ground-Truth comparison metrics across 100+ points...
+          Computing requirement-level GenAI vs Python Ground-Truth comparison metrics...
         </div>
       </div>
     );
@@ -63,7 +63,7 @@ export const ComparisonResults = () => {
   });
 
   const totalMatches = allRows.filter((r) => r.match_status === 'Match').length;
-  const overallRate = Math.round((totalMatches / (allRows.length || 1)) * 100);
+  const overallRate = allRows.length > 0 ? Math.round((totalMatches / allRows.length) * 100) : 0;
 
   return (
     <div className="space-y-6 animate-fadeIn">
@@ -75,7 +75,7 @@ export const ComparisonResults = () => {
             GenAI vs Python Ground-Truth Comparison Engine
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Auditing 100+ requirement-level decisions across 10 standard job roles (SRS Deliverable 6)
+            Auditing requirement-level decisions across standard job roles (SRS Deliverable 6)
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export const ComparisonResults = () => {
         <div className="glass-panel p-5">
           <span className="text-[11px] font-semibold uppercase text-slate-400">Total Requirements Audited</span>
           <div className="text-2xl font-black text-white mt-2">{allRows.length}</div>
-          <p className="text-[11px] text-slate-400 mt-1">100+ Item Evaluation Benchmark</p>
+          <p className="text-[11px] text-slate-400 mt-1">Dynamic Evaluation Benchmark</p>
         </div>
 
         <div className="glass-panel p-5">
@@ -155,37 +155,45 @@ export const ComparisonResults = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
-              {filteredRows.map((row, idx) => (
-                <tr key={idx} className="hover:bg-slate-800/40 transition">
-                  <td className="px-4 py-3.5 space-y-0.5">
-                    <div className="font-mono font-bold text-indigo-400">{row.req_code}</div>
-                    <div className="font-semibold text-white">{row.role}</div>
-                  </td>
-                  <td className="px-4 py-3.5 text-slate-200 max-w-xs font-medium">
-                    {row.python_expected}
-                  </td>
-                  <td className="px-4 py-3.5 text-slate-300 max-w-xs">
-                    {row.genai_result}
-                  </td>
-                  <td className="px-4 py-3.5">
-                    {row.match_status === 'Match' ? (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
-                        <CheckCircle2 className="w-3 h-3" /> MATCH
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-rose-400 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800">
-                        <XCircle className="w-3 h-3" /> MISMATCH
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3.5">
-                    <span className="text-cyan-400 font-medium text-[11px]">{row.traceability_status}</span>
-                  </td>
-                  <td className="px-4 py-3.5 text-slate-400 text-[11px] max-w-xs">
-                    {row.explanation}
+              {filteredRows.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="text-center py-12 text-slate-500">
+                    No comparison data available. Generate an onboarding plan to trigger comparison.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredRows.map((row, idx) => (
+                  <tr key={idx} className="hover:bg-slate-800/40 transition">
+                    <td className="px-4 py-3.5 space-y-0.5">
+                      <div className="font-mono font-bold text-indigo-400">{row.req_code}</div>
+                      <div className="font-semibold text-white">{row.role}</div>
+                    </td>
+                    <td className="px-4 py-3.5 text-slate-200 max-w-xs font-medium">
+                      {row.python_expected}
+                    </td>
+                    <td className="px-4 py-3.5 text-slate-300 max-w-xs">
+                      {row.genai_result}
+                    </td>
+                    <td className="px-4 py-3.5">
+                      {row.match_status === 'Match' ? (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
+                          <CheckCircle2 className="w-3 h-3" /> MATCH
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-rose-400 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800">
+                          <XCircle className="w-3 h-3" /> MISMATCH
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3.5">
+                      <span className="text-cyan-400 font-medium text-[11px]">{row.traceability_status}</span>
+                    </td>
+                    <td className="px-4 py-3.5 text-slate-400 text-[11px] max-w-xs">
+                      {row.explanation}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

@@ -33,14 +33,17 @@ export const EmployeeDashboard = () => {
   const fetchLearnerData = async () => {
     try {
       setLoading(true);
-      // Default to employee 1 (Abdul Raheem) or currentUser id
-      const empId = currentUser?.role === 'employee' ? 1 : 1;
-      const res = await employeeService.getById(empId);
-      setEmployeeData(res.data);
+      const res = await employeeService.getAll();
+      const emps = res.data.employees || [];
+      if (emps.length > 0) {
+        const empId = emps[0].id;
+        const eRes = await employeeService.getById(empId);
+        setEmployeeData(eRes.data);
 
-      if (res.data.active_plan) {
-        const planRes = await planService.getById(res.data.active_plan.id);
-        setPlanDetails(planRes.data);
+        if (eRes.data.active_plan) {
+          const planRes = await planService.getById(eRes.data.active_plan.id);
+          setPlanDetails(planRes.data);
+        }
       }
     } catch (err) {
       console.error('Error loading employee journey:', err);
@@ -103,12 +106,22 @@ export const EmployeeDashboard = () => {
     );
   }
 
-  const emp = employeeData?.employee || {};
-  const plan = planDetails?.plan || {};
+  const emp = employeeData?.employee;
+  const plan = planDetails?.plan || employeeData?.active_plan;
   const modules = planDetails?.modules || [];
   const checklists = planDetails?.checklists || [];
   const tasks = planDetails?.tasks || [];
   const quizzes = planDetails?.quizzes || [];
+
+  if (!emp) {
+    return (
+      <div className="glass-panel p-12 text-center text-xs text-slate-500 space-y-2">
+        <GraduationCap className="w-8 h-8 text-slate-600 mx-auto" />
+        <p className="font-bold text-slate-300">No Employee Profile Found</p>
+        <p>Enroll an employee in the Employee Directory to start their onboarding journey.</p>
+      </div>
+    );
+  }
 
   const stages = ['Day 1', 'Week 1', 'Week 2', 'First 30 Days', '60 Days', '90 Days'];
 
@@ -133,12 +146,12 @@ export const EmployeeDashboard = () => {
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-              Personalized Plan: {plan.plan_code || 'PLN-0001'}
+              Personalized Plan: {plan?.plan_code || 'Pending Generation'}
             </span>
-            <StatusBadge status={plan.status || 'verified'} />
+            {plan && <StatusBadge status={plan.status} />}
           </div>
           <h1 className="text-2xl font-bold text-white tracking-tight">
-            Welcome to Apex Global, {emp.name}!
+            Welcome, {emp.name}!
           </h1>
           <p className="text-xs text-slate-400">
             Role: <strong className="text-slate-200">{emp.role_name}</strong> • Department: <strong className="text-slate-200">{emp.department}</strong> • Experience Level: <strong className="text-slate-200">{emp.experience_level}</strong>
@@ -153,7 +166,7 @@ export const EmployeeDashboard = () => {
           </div>
           <div className="h-10 w-px bg-slate-800"></div>
           <div className="text-center">
-            <div className="text-2xl font-black text-emerald-400">{plan.coverage_score || 95}%</div>
+            <div className="text-2xl font-black text-emerald-400">{plan?.coverage_score || 0}%</div>
             <div className="text-[10px] text-slate-400 uppercase font-semibold">Policy Coverage</div>
           </div>
         </div>
@@ -218,8 +231,10 @@ export const EmployeeDashboard = () => {
                     </div>
 
                     <div className="text-[11px] text-slate-400 bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/80 flex items-center justify-between">
-                      <span>Source: <strong className="text-indigo-300">{m.source_doc_code}</strong> ({m.source_section})</span>
-                      <span className="text-emerald-400 font-medium">Ground Truth Verified</span>
+                      <div>
+                        Source: <strong className="text-slate-200 font-mono">{m.source_doc_code}</strong> ({m.source_section})
+                      </div>
+                      <span className="text-emerald-400 font-semibold">Mandatory</span>
                     </div>
                   </div>
                 ))
@@ -232,13 +247,13 @@ export const EmployeeDashboard = () => {
             <div className="flex items-center justify-between pb-4 border-b border-slate-800">
               <div>
                 <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-                  <Target className="w-4 h-4 text-emerald-400" />
-                  {activeStage} Practical Tasks & Scenarios
+                  <Target className="w-4 h-4 text-indigo-400" />
+                  {activeStage} Practical Tasks
                 </h2>
-                <p className="text-xs text-slate-400">Role-specific tasks and workplace simulations</p>
+                <p className="text-xs text-slate-400">Actionable assignments to prove operational competence</p>
               </div>
               <span className="text-xs font-semibold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-lg">
-                {completedTasks}/{totalTasks} Done
+                {stageTasks.filter((t) => t.is_completed).length}/{stageTasks.length} Completed
               </span>
             </div>
 
@@ -246,33 +261,32 @@ export const EmployeeDashboard = () => {
               {stageTasks.length === 0 ? (
                 <p className="py-6 text-center text-xs text-slate-500">No practical tasks due in {activeStage}.</p>
               ) : (
-                stageTasks.map((task) => (
+                stageTasks.map((t) => (
                   <div
-                    key={task.id}
-                    onClick={() => handleToggleTask(task.id)}
-                    className={`p-3.5 rounded-xl border cursor-pointer transition flex items-start gap-3 ${
-                      task.is_completed
-                        ? 'bg-emerald-950/20 border-emerald-800/40 text-slate-300'
-                        : 'bg-slate-800/40 border-slate-700/60 hover:border-indigo-500/50'
-                    }`}
+                    key={t.id}
+                    onClick={() => handleToggleTask(t.id)}
+                    className="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 cursor-pointer flex items-start gap-3 transition"
                   >
-                    <button className="mt-0.5 text-indigo-400 flex-shrink-0">
-                      {task.is_completed ? (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    <button className="mt-0.5 text-indigo-400">
+                      {t.is_completed ? (
+                        <CheckCircle2 className="w-5 h-5 text-emerald-400" />
                       ) : (
-                        <Circle className="w-4 h-4 text-slate-500" />
+                        <Circle className="w-5 h-5 text-slate-500" />
                       )}
                     </button>
                     <div className="space-y-1 flex-1">
                       <div className="flex items-center justify-between">
-                        <span className={`text-xs font-bold ${task.is_completed ? 'line-through text-slate-400' : 'text-slate-200'}`}>
-                          {task.title}
+                        <span className={`text-xs font-bold ${t.is_completed ? 'line-through text-slate-500' : 'text-slate-200'}`}>
+                          {t.title}
                         </span>
-                        <span className="text-[10px] text-slate-400 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">
-                          {task.difficulty || 'Medium'}
+                        <span className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400">
+                          {t.difficulty || 'Medium'}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-400">{task.description}</p>
+                      <p className="text-xs text-slate-400">{t.description}</p>
+                      <div className="text-[11px] text-cyan-400 pt-1">
+                        Outcome: {t.expected_outcome}
+                      </div>
                     </div>
                   </div>
                 ))
@@ -281,42 +295,41 @@ export const EmployeeDashboard = () => {
           </div>
         </div>
 
-        {/* Right Col: Checklist & Quizzes */}
+        {/* Right Col: Checklists & Quizzes */}
         <div className="space-y-6">
-          {/* Stage Checklist */}
-          <div className="glass-panel p-6">
+          {/* Action Checklists */}
+          <div className="glass-panel p-6 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-                <ListTodo className="w-4 h-4 text-cyan-400" />
+              <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
+                <ListTodo className="w-4 h-4 text-indigo-400" />
                 {activeStage} Checklist
-              </h2>
-              <span className="text-xs font-bold text-cyan-400">{checklistPercent}%</span>
+              </h3>
+              <span className="text-xs font-bold text-indigo-400">
+                {stageChecklists.filter((c) => c.is_done).length}/{stageChecklists.length}
+              </span>
             </div>
 
-            <div className="space-y-2.5 mt-4">
+            <div className="space-y-2.5">
               {stageChecklists.length === 0 ? (
                 <p className="py-4 text-center text-xs text-slate-500">No checklist items for {activeStage}.</p>
               ) : (
-                stageChecklists.map((item) => (
+                stageChecklists.map((c) => (
                   <div
-                    key={item.id}
-                    onClick={() => handleToggleChecklist(item.id)}
-                    className="p-3 rounded-lg bg-slate-800/30 border border-slate-700/40 hover:bg-slate-800/60 cursor-pointer transition flex items-start gap-2.5"
+                    key={c.id}
+                    onClick={() => handleToggleChecklist(c.id)}
+                    className="p-3 rounded-xl bg-slate-900/50 border border-slate-800/80 hover:border-slate-700 cursor-pointer flex items-center gap-3 transition"
                   >
-                    <button className="mt-0.5">
-                      {item.is_done ? (
+                    <button className="text-indigo-400">
+                      {c.is_done ? (
                         <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                       ) : (
                         <Circle className="w-4 h-4 text-slate-500" />
                       )}
                     </button>
-                    <div className="space-y-0.5 flex-1">
-                      <p className={`text-xs ${item.is_done ? 'line-through text-slate-400' : 'text-slate-200 font-medium'}`}>
-                        {item.activity}
-                      </p>
-                      {item.source_reference && (
-                        <p className="text-[10px] text-slate-400">Ref: {item.source_reference}</p>
-                      )}
+                    <div className="flex-1">
+                      <span className={`text-xs ${c.is_done ? 'line-through text-slate-500' : 'text-slate-300 font-medium'}`}>
+                        {c.activity}
+                      </span>
                     </div>
                   </div>
                 ))
@@ -324,34 +337,38 @@ export const EmployeeDashboard = () => {
             </div>
           </div>
 
-          {/* Quizzes & Knowledge Check */}
-          <div className="glass-panel p-6">
+          {/* Interactive Quizzes */}
+          <div className="glass-panel p-6 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-                <HelpCircle className="w-4 h-4 text-amber-400" />
-                Knowledge Checks & Quizzes
-              </h2>
+              <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
+                <HelpCircle className="w-4 h-4 text-indigo-400" />
+                Competency Quizzes
+              </h3>
+              <span className="text-xs font-semibold text-slate-400">{quizzes.length} Available</span>
             </div>
 
-            <div className="space-y-3 mt-4">
+            <div className="space-y-3">
               {quizzes.length === 0 ? (
-                <p className="py-4 text-center text-xs text-slate-500">No active quizzes generated for this plan.</p>
+                <p className="py-4 text-center text-xs text-slate-500">No quizzes registered for this curriculum yet.</p>
               ) : (
-                quizzes.map((quiz) => (
-                  <div key={quiz.id} className="p-4 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-3">
-                    <div className="space-y-1">
-                      <span className="text-xs font-bold text-white">{quiz.title}</span>
-                      <p className="text-[11px] text-slate-400">Passing Score: {quiz.passing_score}%</p>
+                quizzes.map((q) => (
+                  <div key={q.id} className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-white">{q.title}</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 font-bold">
+                        Pass: {q.passing_score}%
+                      </span>
                     </div>
+                    <p className="text-[11px] text-slate-400">Module: {q.source_module}</p>
                     <button
                       onClick={() => {
-                        setActiveQuiz(quiz);
+                        setActiveQuiz(q);
                         setQuizAnswers({});
                         setQuizResult(null);
                       }}
-                      className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold transition"
+                      className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg transition shadow"
                     >
-                      Attempt Quiz ({quiz.questions?.length || 0} Questions)
+                      Take Quiz Assessment
                     </button>
                   </div>
                 ))
@@ -364,11 +381,11 @@ export const EmployeeDashboard = () => {
       {/* Quiz Modal */}
       {activeQuiz && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="glass-panel max-w-2xl w-full p-6 space-y-6 max-h-[90vh] overflow-y-auto">
+          <div className="glass-panel max-w-xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <div>
-                <h3 className="text-base font-bold text-white">{activeQuiz.title}</h3>
-                <p className="text-xs text-slate-400">Source-Grounded Policy Assessment</p>
+                <h3 className="text-sm font-bold text-white">{activeQuiz.title}</h3>
+                <p className="text-xs text-slate-400">Passing Score Threshold: {activeQuiz.passing_score}%</p>
               </div>
               <button
                 onClick={() => setActiveQuiz(null)}
@@ -379,16 +396,19 @@ export const EmployeeDashboard = () => {
             </div>
 
             {quizResult ? (
-              <div className="space-y-4 py-4 text-center">
-                <div className={`text-4xl font-black ${quizResult.passed ? 'text-emerald-400' : 'text-rose-400'}`}>
-                  {quizResult.score}%
+              <div className={`p-5 rounded-2xl border text-center space-y-3 ${
+                quizResult.passed ? 'bg-emerald-950/50 border-emerald-800 text-emerald-300' : 'bg-rose-950/50 border-rose-800 text-rose-300'
+              }`}>
+                <div className="text-3xl font-black">{quizResult.score}%</div>
+                <div className="font-bold text-sm">
+                  {quizResult.passed ? '🎉 Assessment Passed!' : '⚠️ Assessment Threshold Not Met'}
                 </div>
-                <p className="text-sm text-slate-200 font-semibold">
-                  {quizResult.passed ? 'Congratulations! You passed this compliance assessment.' : 'Score below passing threshold (80%). Please review policies and retry.'}
+                <p className="text-xs text-slate-300">
+                  You answered {quizResult.correct_count} of {quizResult.total_questions} questions correctly.
                 </p>
                 <button
                   onClick={() => setActiveQuiz(null)}
-                  className="px-6 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-lg"
+                  className="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-semibold"
                 >
                   Return to Dashboard
                 </button>
@@ -396,18 +416,19 @@ export const EmployeeDashboard = () => {
             ) : (
               <div className="space-y-6">
                 {(activeQuiz.questions || []).map((q, qIdx) => (
-                  <div key={q.id || qIdx} className="space-y-3 bg-slate-800/30 p-4 rounded-xl border border-slate-700/50">
-                    <p className="text-xs font-bold text-slate-200">
-                      Q{qIdx + 1}. {q.question}
-                    </p>
-                    <div className="space-y-2">
+                  <div key={qIdx} className="space-y-2.5 p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+                    <div className="text-xs font-bold text-slate-200">
+                      {qIdx + 1}. {q.question}
+                    </div>
+                    <div className="space-y-1.5">
                       {(q.options || []).map((opt, optIdx) => (
                         <label
                           key={optIdx}
-                          className={`flex items-center gap-3 p-2.5 rounded-lg border text-xs cursor-pointer transition ${
+                          onClick={() => handleQuizOptionSelect(qIdx, optIdx)}
+                          className={`flex items-center gap-2.5 p-2.5 rounded-lg border text-xs cursor-pointer transition ${
                             quizAnswers[qIdx] === optIdx
-                              ? 'bg-indigo-950/60 border-indigo-500 text-indigo-200'
-                              : 'bg-slate-900/40 border-slate-800 text-slate-300 hover:bg-slate-800/50'
+                              ? 'bg-indigo-600/20 border-indigo-500 text-indigo-200'
+                              : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700'
                           }`}
                         >
                           <input
@@ -426,10 +447,10 @@ export const EmployeeDashboard = () => {
 
                 <button
                   onClick={handleQuizSubmit}
-                  disabled={submittingQuiz}
-                  className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-emerald-600/20"
+                  disabled={submittingQuiz || Object.keys(quizAnswers).length === 0}
+                  className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-indigo-600/30"
                 >
-                  {submittingQuiz ? 'Evaluating answers against policy rules...' : 'Submit Answers & Calculate Score'}
+                  {submittingQuiz ? 'Submitting Answers...' : 'Submit Assessment Answers'}
                 </button>
               </div>
             )}

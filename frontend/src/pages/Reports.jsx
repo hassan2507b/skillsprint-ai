@@ -103,7 +103,7 @@ export const Reports = () => {
       <div className="glass-panel overflow-hidden">
         <div className="p-4 border-b border-slate-800">
           <h2 className="text-sm font-bold text-slate-200">Role-Level Mandatory Policy Coverage Audit</h2>
-          <p className="text-xs text-slate-400">Ground-truth compliance averages across 10 job roles</p>
+          <p className="text-xs text-slate-400">Ground-truth compliance averages across job roles</p>
         </div>
 
         <div className="overflow-x-auto">
@@ -118,29 +118,37 @@ export const Reports = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
-              {roleReports.map((r, i) => (
-                <tr key={i} className="hover:bg-slate-800/40 transition">
-                  <td className="px-5 py-3.5 font-bold text-white">{r.role_name}</td>
-                  <td className="px-5 py-3.5 font-semibold text-slate-300">{r.mandatory_requirements} Items</td>
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-2">
-                      <div className="w-24 bg-slate-800 rounded-full h-2 overflow-hidden">
-                        <div
-                          className="bg-emerald-500 h-2 rounded-full"
-                          style={{ width: `${r.average_coverage}%` }}
-                        ></div>
-                      </div>
-                      <span className="font-bold text-emerald-400">{r.average_coverage}%</span>
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5 font-bold text-cyan-400">{r.average_traceability}%</td>
-                  <td className="px-5 py-3.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
-                      COMPLIANT
-                    </span>
+              {roleReports.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="text-center py-12 text-slate-500">
+                    No report data available. Create roles and generate plans to view compliance analytics.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                roleReports.map((r, i) => (
+                  <tr key={i} className="hover:bg-slate-800/40 transition">
+                    <td className="px-5 py-3.5 font-bold text-white">{r.role_name}</td>
+                    <td className="px-5 py-3.5 font-semibold text-slate-300">{r.mandatory_requirements} Items</td>
+                    <td className="px-5 py-3.5">
+                      <div className="flex items-center gap-2">
+                        <div className="w-24 bg-slate-800 rounded-full h-2 overflow-hidden">
+                          <div
+                            className="bg-emerald-500 h-2 rounded-full"
+                            style={{ width: `${r.average_coverage}%` }}
+                          ></div>
+                        </div>
+                        <span className="font-bold text-emerald-400">{r.average_coverage}%</span>
+                      </div>
+                    </td>
+                    <td className="px-5 py-3.5 font-bold text-cyan-400">{r.average_traceability}%</td>
+                    <td className="px-5 py-3.5">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
+                        {r.average_coverage >= 80 ? 'COMPLIANT' : 'NEEDS ATTENTION'}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

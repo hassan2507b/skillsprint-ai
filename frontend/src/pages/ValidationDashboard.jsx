@@ -30,9 +30,10 @@ export const ValidationDashboard = () => {
       try {
         setLoading(true);
         const res = await planService.getAll();
-        setPlans(res.data.plans || []);
-        if (!selectedPlanId && res.data.plans?.length > 0) {
-          setSelectedPlanId(res.data.plans[0].id);
+        const planList = res.data.plans || [];
+        setPlans(planList);
+        if (!selectedPlanId && planList.length > 0) {
+          setSelectedPlanId(planList[0].id);
         }
       } catch (err) {
         console.error('Failed to load plans for validation:', err);
@@ -66,6 +67,35 @@ export const ValidationDashboard = () => {
   const unsupported = val.unsupported_items || [];
   const contradictions = val.contradictions || [];
   const adversarial = val.adversarial_warnings || [];
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-emerald-400 font-medium text-xs animate-pulse">
+          Executing Python Ground-Truth Validation Rule Engine...
+        </div>
+      </div>
+    );
+  }
+
+  if (plans.length === 0) {
+    return (
+      <div className="glass-panel p-12 text-center text-xs text-slate-500 space-y-3 max-w-2xl mx-auto">
+        <ShieldCheck className="w-10 h-10 text-slate-600 mx-auto" />
+        <h2 className="text-sm font-bold text-slate-200">No Onboarding Plans Available for Validation</h2>
+        <p className="text-slate-400">
+          Upload documents, configure your role requirement matrix, and generate an onboarding plan to trigger the independent Python validation engine.
+        </p>
+        <Link
+          to="/generate"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition mt-2"
+        >
+          <Sparkles className="w-4 h-4" />
+          Generate First Onboarding Plan
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-fadeIn">
