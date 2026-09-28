@@ -33,11 +33,11 @@ const Layout = ({ children }) => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
+    <div className="flex flex-col min-h-screen bg-slate-100 text-slate-800 selection:bg-brand-500 selection:text-white">
       <Navbar />
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden pt-20">
         <Sidebar />
-        <main className="flex-1 p-6 md:p-8 overflow-y-auto max-h-[calc(100vh-61px)]">
+        <main className="flex-1 p-6 md:p-8 overflow-y-auto bg-white">
           {children}
         </main>
       </div>

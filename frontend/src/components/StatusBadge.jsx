@@ -3,24 +3,24 @@ import React from 'react';
 export const StatusBadge = ({ status }) => {
   const norm = String(status || '').toLowerCase().replace(/_/g, ' ');
 
-  let colorClasses = 'bg-slate-800 text-slate-300 border-slate-700';
+  let colorClasses = 'bg-slate-100 text-slate-700 border-slate-300';
   let dotColor = 'bg-slate-400';
 
   if (norm.includes('verified') && !norm.includes('warning') && !norm.includes('partially')) {
-    colorClasses = 'bg-emerald-950/80 text-emerald-300 border-emerald-800/80';
-    dotColor = 'bg-emerald-400';
+    colorClasses = 'bg-brand-50/80 text-brand-700 border-brand-200/80';
+    dotColor = 'bg-brand-400';
   } else if (norm.includes('warning') || norm.includes('partially') || norm.includes('attention')) {
-    colorClasses = 'bg-amber-950/80 text-amber-300 border-amber-800/80';
-    dotColor = 'bg-amber-400 animate-pulse';
+    colorClasses = 'bg-brand-50/80 text-brand-700 border-brand-200/80';
+    dotColor = 'bg-brand-400 animate-pulse';
   } else if (norm.includes('flagged') || norm.includes('rejected') || norm.includes('quarantined') || norm.includes('unsupported') || norm.includes('contradict')) {
-    colorClasses = 'bg-rose-950/80 text-rose-300 border-rose-800/80';
-    dotColor = 'bg-rose-400';
+    colorClasses = 'bg-brand-50/80 text-brand-700 border-brand-200/80';
+    dotColor = 'bg-brand-400';
   } else if (norm.includes('approved') || norm.includes('completed') || norm.includes('active')) {
-    colorClasses = 'bg-cyan-950/80 text-cyan-300 border-cyan-800/80';
-    dotColor = 'bg-cyan-400';
+    colorClasses = 'bg-brand-50/80 text-brand-700 border-brand-200/80';
+    dotColor = 'bg-brand-400';
   } else if (norm.includes('pending') || norm.includes('in progress')) {
-    colorClasses = 'bg-indigo-950/80 text-indigo-300 border-indigo-800/80';
-    dotColor = 'bg-indigo-400 animate-pulse';
+    colorClasses = 'bg-brand-50/80 text-brand-700 border-brand-200/80';
+    dotColor = 'bg-brand-400 animate-pulse';
   }
 
   return (

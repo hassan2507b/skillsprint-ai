@@ -4,16 +4,15 @@ import { StatusBadge } from '../components/StatusBadge';
 import { Link } from 'react-router-dom';
 import {
   FileText,
-  Users,
-  Briefcase,
-  CheckCircle2,
+  Layers,
+  TrendingUp,
   AlertTriangle,
   Sparkles,
   ArrowRight,
-  TrendingUp,
-  ShieldAlert,
-  Layers,
-  Activity
+  Activity,
+  CheckCircle2,
+  ShieldCheck,
+  Zap
 } from 'lucide-react';
 
 export const AdminDashboard = () => {
@@ -39,8 +38,8 @@ export const AdminDashboard = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
-        <div className="flex items-center gap-3 text-indigo-400 font-medium">
-          <Activity className="w-6 h-6 animate-spin" />
+        <div className="flex items-center gap-3 text-brand-600 font-medium text-xs">
+          <Activity className="w-5 h-5 animate-spin text-brand-600" />
           <span>Synthesizing enterprise metrics...</span>
         </div>
       </div>
@@ -52,30 +51,36 @@ export const AdminDashboard = () => {
   const recentReviews = data?.recent_reviews || [];
 
   return (
-    <div className="space-y-8 animate-fadeIn">
-      {/* Top Banner */}
-      <div className="glass-panel p-6 bg-gradient-to-r from-indigo-950/60 via-slate-900 to-slate-900 border-indigo-900/40 relative overflow-hidden">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 text-xs font-semibold mb-3">
-              <Sparkles className="w-3.5 h-3.5" /> Apex Global Enterprise Knowledge Mesh
+    <div className="space-y-6 animate-fadeIn max-w-6xl mx-auto pb-10">
+      {/* Top Hero Banner with Richer Gradient & Visual Flair */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-brand-900 via-brand-950 to-slate-900 rounded-3xl p-8 text-white shadow-xl border border-brand-200/50">
+        <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute right-40 -top-10 w-48 h-48 bg-brand-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-500/20 text-slate-600 border border-brand-400/30 text-xs font-semibold backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5 text-brand-600 animate-pulse" /> Apex Global Enterprise Knowledge Mesh
             </div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Enterprise Onboarding Intelligence Hub</h1>
-            <p className="text-sm text-slate-400 mt-1 max-w-2xl">
-              Source-grounded curriculum generation with independent Python rule validation, strict prompt injection defense, and 100% matrix compliance.
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+              Enterprise Onboarding Intelligence Hub
+            </h1>
+            <p className="text-xs sm:text-sm text-white leading-relaxed">
+              Source-grounded curriculum generation featuring independent Python rule validation, strict prompt injection defense, and real-time matrix compliance monitoring.
             </p>
           </div>
-          <div className="flex items-center gap-3">
+
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
             <Link
               to="/generate"
-              className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-600/30 transition"
+              className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-400 text-white text-xs font-bold px-5 py-3 rounded-2xl shadow-lg shadow-brand-500/30 transition-all hover:-translate-y-0.5"
             >
-              <Sparkles className="w-4 h-4" />
+              <Zap className="w-4 h-4 fill-white" />
               Generate Plan
             </Link>
             <Link
               to="/validation"
-              className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold px-4 py-2.5 rounded-xl border border-slate-700 transition"
+              className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-5 py-3 rounded-2xl border border-white/20 backdrop-blur-md transition-all hover:-translate-y-0.5"
             >
               Run Validation
             </Link>
@@ -83,141 +88,158 @@ export const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* KPI Cards */}
+      {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="glass-panel p-5">
+        {/* Total Documents */}
+        <div className="bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase text-slate-400">Total Documents</span>
-            <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600">Total Documents</span>
+            <div className="w-9 h-9 rounded-xl bg-brand-50 border border-brand-100 text-brand-600 flex items-center justify-center shadow-inner">
               <FileText className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-white">{stats.total_documents || 0}</span>
-            <span className="text-xs text-emerald-400 font-medium">({stats.active_documents || 0} Active)</span>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-black text-slate-900">{stats.total_documents || 0}</span>
+            <span className="text-xs text-brand-600 font-bold bg-brand-50 px-2 py-0.5 rounded-md border border-brand-100">
+              {stats.active_documents || 0} Active
+            </span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Policies, SOPs, FAQs & Handbooks</p>
+          <p className="text-[11px] text-slate-500 mt-2 font-medium">Policies, SOPs, FAQs & Handbooks</p>
         </div>
 
-        <div className="glass-panel p-5">
+        {/* Matrix Requirements */}
+        <div className="bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase text-slate-400">Matrix Requirements</span>
-            <div className="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600">Matrix Requirements</span>
+            <div className="w-9 h-9 rounded-xl bg-brand-50 border border-brand-100 text-brand-600 flex items-center justify-center shadow-inner">
               <Layers className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-white">{stats.total_matrix_requirements || 0}</span>
-            <span className="text-xs text-indigo-400 font-medium">{stats.mandatory_requirements || 0} Mandatory</span>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-black text-slate-900">{stats.total_matrix_requirements || 0}</span>
+            <span className="text-xs text-brand-600 font-bold bg-brand-50 px-2 py-0.5 rounded-md border border-brand-100">
+              {stats.mandatory_requirements || 0} Core
+            </span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Across 10 standard job roles</p>
+          <p className="text-[11px] text-slate-500 mt-2 font-medium">Across 10 standard job roles</p>
         </div>
 
-        <div className="glass-panel p-5">
+        {/* Avg Coverage */}
+        <div className="bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase text-slate-400">Avg Mandatory Coverage</span>
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600">Mandatory Coverage</span>
+            <div className="w-9 h-9 rounded-xl bg-brand-50 border border-brand-100 text-brand-600 flex items-center justify-center shadow-inner">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-emerald-400">{stats.average_coverage_score || 0}%</span>
-            <span className="text-xs text-slate-400 font-medium">Target 100%</span>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-black text-brand-600">{stats.average_coverage_score || 0}%</span>
+            <span className="text-xs text-slate-600 font-semibold">Target 100%</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Python Ground-Truth Verified</p>
+          <p className="text-[11px] text-slate-500 mt-2 font-medium">Python Ground-Truth Verified</p>
         </div>
 
-        <div className="glass-panel p-5">
+        {/* Review Queue */}
+        <div className="bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase text-slate-400">Review Queue</span>
-            <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600">Review Queue</span>
+            <div className="w-9 h-9 rounded-xl bg-brand-50 border border-brand-100 text-brand-600 flex items-center justify-center shadow-inner">
               <AlertTriangle className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-amber-400">{stats.pending_reviews || 0}</span>
-            <span className="text-xs text-slate-400 font-medium">Flagged Items</span>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-black text-brand-600">{stats.pending_reviews || 0}</span>
+            <span className="text-xs text-brand-700 font-bold bg-brand-50 px-2 py-0.5 rounded-md border border-brand-100">
+              Needs Action
+            </span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Awaiting Human Review</p>
+          <p className="text-[11px] text-slate-500 mt-2 font-medium">Flagged items awaiting review</p>
         </div>
       </div>
 
-      {/* Dual Pipeline Architecture Highlights */}
+      {/* Main Content Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Generated Plans */}
-        <div className="glass-panel p-6">
-          <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-            <div>
-              <h2 className="text-sm font-bold text-slate-200">Recent Generated Onboarding Plans</h2>
-              <p className="text-xs text-slate-400">Multi-stage curriculums verified against Ground Truth</p>
+        <div className="bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+              <div>
+                <h2 className="text-sm font-bold text-slate-900">Recent Generated Onboarding Plans</h2>
+                <p className="text-xs text-slate-500">Multi-stage curriculums verified against Ground Truth</p>
+              </div>
+              <Link to="/approved-plans" className="text-xs font-bold text-brand-600 hover:text-slate-9000 flex items-center gap-1 bg-brand-50 px-3 py-1.5 rounded-xl border border-brand-100 transition">
+                View All <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
-            <Link to="/approved-plans" className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
-              View All <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
 
-          <div className="divide-y divide-slate-800/80 mt-2">
-            {recentPlans.length === 0 ? (
-              <p className="py-6 text-center text-xs text-slate-500">No onboarding plans generated yet.</p>
-            ) : (
-              recentPlans.map((plan) => (
-                <div key={plan.id} className="py-3.5 flex items-center justify-between hover:bg-slate-800/30 px-2 rounded-lg transition">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-semibold text-white">{plan.employee_name || 'Employee'}</span>
-                      <span className="text-[11px] text-slate-400">({plan.role_name})</span>
+            <div className="divide-y divide-slate-100 mt-3">
+              {recentPlans.length === 0 ? (
+                <div className="py-12 text-center text-xs text-slate-600">No onboarding plans generated yet.</div>
+              ) : (
+                recentPlans.map((plan) => (
+                  <div key={plan.id} className="py-3.5 flex items-center justify-between hover:bg-slate-50/80 px-3 rounded-2xl transition-all">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-slate-900">{plan.employee_name || 'Employee'}</span>
+                        <span className="text-[11px] text-slate-500 font-semibold bg-slate-100 px-2 py-0.5 rounded-md">{plan.role_name}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-[11px] text-slate-500 font-medium">
+                        <span>Code: <strong className="text-slate-800 font-mono">{plan.plan_code}</strong></span>
+                        <span>Coverage: <strong className="text-brand-600 font-bold">{plan.coverage_score}%</strong></span>
+                        <span>Traceability: <strong className="text-brand-600 font-bold">{plan.traceability_score}%</strong></span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 text-[11px] text-slate-400">
-                      <span>Code: <strong className="text-slate-300">{plan.plan_code}</strong></span>
-                      <span>Coverage: <strong className="text-emerald-400">{plan.coverage_score}%</strong></span>
-                      <span>Traceability: <strong className="text-cyan-400">{plan.traceability_score}%</strong></span>
+                    <div className="flex items-center gap-3">
+                      <StatusBadge status={plan.status} />
+                      <Link
+                        to={`/plans/${plan.id}`}
+                        className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-brand-600 text-slate-700 hover:text-white transition text-xs font-bold border border-slate-200 hover:border-brand-600 shadow-sm"
+                      >
+                        Inspect
+                      </Link>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <StatusBadge status={plan.status} />
-                    <Link
-                      to={`/plans/${plan.id}`}
-                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white transition text-xs font-medium"
-                    >
-                      Inspect
-                    </Link>
-                  </div>
-                </div>
-              ))
-            )}
+                ))
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Human Review & Policy Queue */}
-        <div className="glass-panel p-6">
-          <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-            <div>
-              <h2 className="text-sm font-bold text-slate-200">Active Review & Escalation Queue</h2>
-              <p className="text-xs text-slate-400">Security scans, contradictions & missing requirements</p>
+        {/* Active Review & Escalation Queue */}
+        <div className="bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+              <div>
+                <h2 className="text-sm font-bold text-slate-900">Active Review & Escalation Queue</h2>
+                <p className="text-xs text-slate-500">Security scans, contradictions & missing requirements</p>
+              </div>
+              <Link to="/reviews" className="text-xs font-bold text-brand-600 hover:text-slate-9000 flex items-center gap-1 bg-brand-50 px-3 py-1.5 rounded-xl border border-brand-100 transition">
+                Open Queue <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
-            <Link to="/reviews" className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
-              Open Queue <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
 
-          <div className="divide-y divide-slate-800/80 mt-2">
-            {recentReviews.length === 0 ? (
-              <p className="py-6 text-center text-xs text-slate-500">Review queue is currently clear.</p>
-            ) : (
-              recentReviews.map((rev) => (
-                <div key={rev.id} className="py-3.5 space-y-1.5 hover:bg-slate-800/30 px-2 rounded-lg transition">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-200">{rev.employee_name} ({rev.role_name})</span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md uppercase ${
-                      rev.risk_flag === 'high' ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-amber-950 text-amber-300 border border-amber-800'
-                    }`}>
-                      {rev.risk_flag} risk
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-400 line-clamp-1">{rev.flag_reason}</p>
+            <div className="divide-y divide-slate-100 mt-3">
+              {recentReviews.length === 0 ? (
+                <div className="py-12 text-center text-xs text-slate-600 flex flex-col items-center justify-center gap-2">
+                  <ShieldCheck className="w-8 h-8 text-slate-9000" />
+                  <span>Review queue is currently clear and fully compliant!</span>
                 </div>
-              ))
-            )}
+              ) : (
+                recentReviews.map((rev) => (
+                  <div key={rev.id} className="py-3.5 space-y-1.5 hover:bg-slate-50/80 px-3 rounded-2xl transition-all">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-slate-900">{rev.employee_name} <span className="text-slate-500 font-normal">({rev.role_name})</span></span>
+                      <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider ${
+                        rev.risk_flag === 'high' ? 'bg-brand-50 text-brand-700 border border-slate-200' : 'bg-brand-50 text-brand-700 border border-slate-200'
+                      }`}>
+                        {rev.risk_flag} risk
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-600 line-clamp-1 font-medium bg-slate-50 p-2 rounded-xl border border-slate-100">{rev.flag_reason}</p>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>

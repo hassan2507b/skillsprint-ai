@@ -100,14 +100,14 @@ export const GeneratePlan = () => {
   return (
     <div className="space-y-6 animate-fadeIn max-w-4xl mx-auto">
       {/* Top Banner */}
-      <div className="glass-panel p-6 bg-gradient-to-r from-indigo-950/60 via-slate-900 to-slate-900 border-indigo-900/40">
+      <div className="glass-panel p-6 bg-gradient-to-r from-brand-950/60 via-slate-900 to-slate-900 border-brand-900/40">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-600/30 border border-indigo-500/40 text-indigo-400 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-2xl bg-brand-600/30 border border-brand-500/40 text-brand-600 flex items-center justify-center">
             <Sparkles className="w-6 h-6 animate-pulse" />
           </div>
           <div>
             <h1 className="text-xl font-bold text-white tracking-tight">Generate Personalized Onboarding Plan</h1>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-600 mt-0.5">
               Dual-Pipeline synthesis: GenAI model drafting + independent deterministic Python ground-truth verification
             </p>
           </div>
@@ -119,13 +119,13 @@ export const GeneratePlan = () => {
         <form onSubmit={handleGenerate} className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Target Employee
               </label>
               <select
                 value={selectedEmpId}
                 onChange={(e) => handleEmpChange(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-950/70 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50/70 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-brand-500"
               >
                 {employees.length === 0 ? (
                   <option value="">No employees found (Enroll an employee first)</option>
@@ -140,13 +140,13 @@ export const GeneratePlan = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Job Role & Matrix Mapping
               </label>
               <select
                 value={selectedRole}
                 onChange={(e) => setSelectedRole(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-950/70 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50/70 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-brand-500"
               >
                 {roles.length === 0 ? (
                   <option value="">No roles defined (Create a role first)</option>
@@ -163,13 +163,13 @@ export const GeneratePlan = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Generative AI Engine
               </label>
               <select
                 value={selectedModel}
                 onChange={(e) => setSelectedModel(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-950/70 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                className="w-full px-3.5 py-2.5 bg-slate-50/70 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-brand-500"
               >
                 <option value="Gemini 1.5 Flash (Source-Grounded)">Gemini 1.5 Flash (Source-Grounded)</option>
                 <option value="Gemini Pro (Multi-Stage Reasoning)">Gemini Pro (Multi-Stage Reasoning)</option>
@@ -178,16 +178,16 @@ export const GeneratePlan = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Configured Chronological Stages
               </label>
-              <div className="p-2.5 bg-slate-950/70 border border-slate-800 rounded-xl text-[11px] text-slate-400 flex flex-wrap gap-1.5">
-                <span className="px-2 py-0.5 rounded bg-indigo-950/60 text-indigo-300 border border-indigo-800">Day 1</span>
-                <span className="px-2 py-0.5 rounded bg-indigo-950/60 text-indigo-300 border border-indigo-800">Week 1</span>
-                <span className="px-2 py-0.5 rounded bg-indigo-950/60 text-indigo-300 border border-indigo-800">Week 2</span>
-                <span className="px-2 py-0.5 rounded bg-indigo-950/60 text-indigo-300 border border-indigo-800">30 Days</span>
-                <span className="px-2 py-0.5 rounded bg-indigo-950/60 text-indigo-300 border border-indigo-800">60 Days</span>
-                <span className="px-2 py-0.5 rounded bg-indigo-950/60 text-indigo-300 border border-indigo-800">90 Days</span>
+              <div className="p-2.5 bg-slate-50/70 border border-slate-200 rounded-xl text-[11px] text-slate-600 flex flex-wrap gap-1.5">
+                <span className="px-2 py-0.5 rounded bg-slate-50/60 text-slate-600 border border-brand-200">Day 1</span>
+                <span className="px-2 py-0.5 rounded bg-slate-50/60 text-slate-600 border border-brand-200">Week 1</span>
+                <span className="px-2 py-0.5 rounded bg-slate-50/60 text-slate-600 border border-brand-200">Week 2</span>
+                <span className="px-2 py-0.5 rounded bg-slate-50/60 text-slate-600 border border-brand-200">30 Days</span>
+                <span className="px-2 py-0.5 rounded bg-slate-50/60 text-slate-600 border border-brand-200">60 Days</span>
+                <span className="px-2 py-0.5 rounded bg-slate-50/60 text-slate-600 border border-brand-200">90 Days</span>
               </div>
             </div>
           </div>
@@ -195,7 +195,7 @@ export const GeneratePlan = () => {
           <button
             type="submit"
             disabled={isGenerating || (employees.length === 0 && !selectedRole)}
-            className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2"
+            className="w-full py-3 bg-brand-600 hover:bg-brand-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-brand-600/30 flex items-center justify-center gap-2"
           >
             <Zap className="w-4 h-4" />
             {isGenerating ? 'Synthesizing & Validating Grounded Curriculum...' : 'Generate and Validate Plan'}
@@ -204,15 +204,15 @@ export const GeneratePlan = () => {
 
         {/* Live Progress Bar */}
         {isGenerating && (
-          <div className="p-4 bg-slate-950/80 rounded-xl border border-indigo-900/50 space-y-2 animate-fadeIn">
+          <div className="p-4 bg-slate-50/80 rounded-xl border border-brand-900/50 space-y-2 animate-fadeIn">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-indigo-300 font-semibold flex items-center gap-2">
-                <Bot className="w-4 h-4 animate-spin text-indigo-400" />
+              <span className="text-slate-600 font-semibold flex items-center gap-2">
+                <Bot className="w-4 h-4 animate-spin text-brand-600" />
                 {generationStep}
               </span>
             </div>
-            <div className="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
-              <div className="bg-indigo-500 h-1.5 rounded-full animate-pulse w-3/4"></div>
+            <div className="w-full bg-white rounded-full h-1.5 overflow-hidden">
+              <div className="bg-brand-500 h-1.5 rounded-full animate-pulse w-3/4"></div>
             </div>
           </div>
         )}
@@ -220,40 +220,40 @@ export const GeneratePlan = () => {
 
       {/* Generated Result Showcase */}
       {resultPlan && (
-        <div className="glass-panel p-6 space-y-5 animate-fadeIn border-emerald-800/40 bg-emerald-950/10">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div className="glass-panel p-6 space-y-5 animate-fadeIn border-brand-200/40 bg-slate-50/10">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              <CheckCircle2 className="w-5 h-5 text-brand-600" />
               <h2 className="text-sm font-bold text-white">
                 Plan {resultPlan.plan_code} Generated & Python Verified
               </h2>
             </div>
             <button
               onClick={() => navigate(`/plans/${resultPlan.plan_id}`)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition shadow-md shadow-indigo-600/20"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold transition shadow-md shadow-brand-600/20"
             >
               View Full Plan Breakdown <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800 text-center">
-              <div className="text-2xl font-black text-emerald-400">
+            <div className="bg-slate-50/60 p-4 rounded-xl border border-slate-200 text-center">
+              <div className="text-2xl font-black text-brand-600">
                 {resultPlan.validation?.coverage_score}%
               </div>
-              <div className="text-[11px] text-slate-400 uppercase font-semibold mt-1">Mandatory Policy Coverage</div>
+              <div className="text-[11px] text-slate-600 uppercase font-semibold mt-1">Mandatory Policy Coverage</div>
             </div>
-            <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800 text-center">
-              <div className="text-2xl font-black text-cyan-400">
+            <div className="bg-slate-50/60 p-4 rounded-xl border border-slate-200 text-center">
+              <div className="text-2xl font-black text-brand-600">
                 {resultPlan.validation?.traceability_score}%
               </div>
-              <div className="text-[11px] text-slate-400 uppercase font-semibold mt-1">Source Traceability</div>
+              <div className="text-[11px] text-slate-600 uppercase font-semibold mt-1">Source Traceability</div>
             </div>
-            <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800 text-center">
-              <div className="text-2xl font-black text-indigo-400">
+            <div className="bg-slate-50/60 p-4 rounded-xl border border-slate-200 text-center">
+              <div className="text-2xl font-black text-brand-600">
                 {resultPlan.plan?.modules?.length || 0}
               </div>
-              <div className="text-[11px] text-slate-400 uppercase font-semibold mt-1">Multi-Stage Modules</div>
+              <div className="text-[11px] text-slate-600 uppercase font-semibold mt-1">Multi-Stage Modules</div>
             </div>
           </div>
         </div>

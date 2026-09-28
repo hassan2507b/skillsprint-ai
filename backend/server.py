@@ -27,6 +27,7 @@ from role_matrix.extractor import requirement_extractor
 from contradiction_checks.detector import contradiction_detector
 from hallucination_checks.verifier import hallucination_checker
 from python_validation.validator import python_validator
+from prompt_templates.templates import SYSTEM_PROMPT_ONBOARDING, USER_PROMPT_ONBOARDING
 from comparison_engine.compare import comparison_engine
 from genai_pipeline.generator import genai_pipeline
 from schemas.models import (
@@ -39,6 +40,22 @@ app = FastAPI(
     version=settings.VERSION,
     description="SkillSprint AI - Enterprise Onboarding Intelligence Platform"
 )
+
+@app.on_event("startup")
+def startup_event():
+    try:
+        init_db()
+        conn = get_db()
+        cursor = conn.cursor()
+        doc_count = cursor.execute("SELECT COUNT(*) FROM documents").fetchone()[0]
+        user_count = cursor.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+        conn.close()
+
+        if doc_count == 0 or user_count == 0:
+            from database.seed_data import seed_database
+            seed_database()
+    except Exception as exc:
+        print(f"[Startup Init Error] {exc}")
 
 # Enable CORS for Vite frontend
 app.add_middleware(
@@ -1172,6 +1189,7 @@ def export_reports(format: str = "csv"):
 # -------------------------------------------------------------
 @app.get("/api/prompts")
 def get_prompts():
+    # return {"response": "Prompt templates are currently managed internally and not exposed via API."}
     return {
         "active_version": settings.PROMPTS_DIR.name if False else "2.4.0",
         "system_prompt": SYSTEM_PROMPT_ONBOARDING,

@@ -3,18 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import { planService } from '../services/api';
 import { StatusBadge } from '../components/StatusBadge';
 import {
-  BookOpen,
   ArrowLeft,
-  CheckCircle2,
-  Clock,
-  Layers,
-  FileCheck,
   ShieldCheck,
   GitCompare,
-  HelpCircle,
-  Target,
-  Sparkles,
-  Award,
   Trash2
 } from 'lucide-react';
 
@@ -42,7 +33,7 @@ export const PlanDetails = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
-        <div className="text-indigo-400 font-medium text-xs animate-pulse">
+        <div className="text-slate-9000 font-medium text-xs animate-pulse">
           Loading curriculum architecture and module assessments...
         </div>
       </div>
@@ -51,11 +42,6 @@ export const PlanDetails = () => {
 
   const plan = data?.plan || {};
   const modules = data?.modules || [];
-  const checklists = data?.checklists || [];
-  const tasks = data?.tasks || [];
-  const quizzes = data?.quizzes || [];
-  const assessments = data?.assessments || [];
-  const validation = data?.validation || {};
 
   const stages = ['All Stages', 'Day 1', 'Week 1', 'Week 2', 'First 30 Days', '60 Days', '90 Days'];
 
@@ -64,26 +50,26 @@ export const PlanDetails = () => {
     : modules.filter((m) => m.stage === selectedStage);
 
   return (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="space-y-6 animate-fadeIn max-w-5xl mx-auto">
       {/* Top Navigation */}
       <div className="flex items-center justify-between">
         <Link
           to="/approved-plans"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600/70 hover:text-slate-900 transition"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Plans
         </Link>
         <div className="flex items-center gap-2">
           <Link
             to={`/validation?planId=${plan.id}`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-brand-500/25 text-slate-600 text-xs font-semibold border border-slate-200/20 transition shadow-inner"
           >
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <ShieldCheck className="w-3.5 h-3.5 text-brand-600" />
             Python Validation
           </Link>
           <Link
             to={`/comparison?planId=${plan.id}`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition shadow-lg shadow-indigo-600/20"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-500 hover:bg-brand-500/80 text-white text-xs font-semibold transition shadow-lg shadow-brand-500/20"
           >
             <GitCompare className="w-3.5 h-3.5" />
             100-Point Comparison
@@ -98,7 +84,7 @@ export const PlanDetails = () => {
                 alert(err.response?.data?.detail || 'Failed to delete plan');
               }
             }}
-            className="p-1.5 rounded-xl bg-slate-800 hover:bg-rose-950 text-slate-400 hover:text-rose-300 border border-slate-700 transition"
+            className="p-2 rounded-xl bg-slate-50 hover:bg-slate-50/80 text-slate-600/80 hover:text-slate-600 border border-slate-200/20 transition shadow-inner"
             title="Delete Plan"
           >
             <Trash2 className="w-4 h-4" />
@@ -107,51 +93,51 @@ export const PlanDetails = () => {
       </div>
 
       {/* Plan Header Card */}
-      <div className="glass-panel p-6 space-y-4">
+      <div className="glass-panel p-6 space-y-4 border border-slate-200/20 shadow-xl">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2.5">
-              <span className="font-mono text-xs font-bold text-indigo-400 px-2.5 py-0.5 rounded-md bg-indigo-500/10 border border-indigo-500/20">
+              <span className="font-mono text-xs font-bold text-slate-9000 px-2.5 py-0.5 rounded-md bg-brand-500/15 border border-brand-500/30 shadow-inner">
                 {plan.plan_code}
               </span>
               <StatusBadge status={plan.status} />
-              <span className="text-xs text-slate-400 font-medium">
-                Engine: <strong className="text-slate-200">{plan.generation_source || 'Gemini 1.5 Flash'}</strong>
+              <span className="text-xs text-slate-600/70 font-medium">
+                Engine: <strong className="text-slate-900">{plan.generation_source || 'Gemini 1.5 Flash'}</strong>
               </span>
             </div>
-            <h1 className="text-xl font-bold text-white tracking-tight">
+            <h1 className="text-xl font-bold text-slate-900 tracking-tight">
               {plan.role_name} Personalized Onboarding Curriculum
             </h1>
           </div>
 
-          <div className="flex items-center gap-4 bg-slate-950/70 p-3 rounded-2xl border border-slate-800 text-center">
+          <div className="flex items-center gap-4 bg-slate-50 p-3 rounded-2xl border border-slate-200/20 text-center shadow-inner">
             <div>
-              <div className="text-xl font-bold text-emerald-400">{plan.coverage_score}%</div>
-              <div className="text-[10px] text-slate-400 uppercase font-semibold">Coverage</div>
+              <div className="text-xl font-bold text-brand-600">{plan.coverage_score}%</div>
+              <div className="text-[10px] text-slate-600/70 uppercase font-semibold">Coverage</div>
             </div>
-            <div className="h-6 w-px bg-slate-800"></div>
+            <div className="h-6 w-px bg-brand-200/20"></div>
             <div>
-              <div className="text-xl font-bold text-cyan-400">{plan.traceability_score}%</div>
-              <div className="text-[10px] text-slate-400 uppercase font-semibold">Traceability</div>
+              <div className="text-xl font-bold text-brand-600">{plan.traceability_score}%</div>
+              <div className="text-[10px] text-slate-600/70 uppercase font-semibold">Traceability</div>
             </div>
-            <div className="h-6 w-px bg-slate-800"></div>
+            <div className="h-6 w-px bg-brand-200/20"></div>
             <div>
-              <div className="text-xl font-bold text-indigo-400">{modules.length}</div>
-              <div className="text-[10px] text-slate-400 uppercase font-semibold">Modules</div>
+              <div className="text-xl font-bold text-slate-9000">{modules.length}</div>
+              <div className="text-[10px] text-slate-600/70 uppercase font-semibold">Modules</div>
             </div>
           </div>
         </div>
 
         {/* Stage Filter Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pt-3 border-t border-slate-800">
+        <div className="flex items-center gap-2 overflow-x-auto pt-3 border-t border-slate-200/15">
           {stages.map((st) => (
             <button
               key={st}
               onClick={() => setSelectedStage(st)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
                 selectedStage === st
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                  : 'bg-slate-900/60 text-slate-400 hover:bg-slate-800 hover:text-slate-200 border border-slate-800'
+                  ? 'bg-brand-500 text-white shadow-md shadow-brand-500/20'
+                  : 'bg-slate-50/60 text-slate-600/70 hover:bg-slate-50 hover:text-slate-900 border border-slate-200/20 shadow-inner'
               }`}
             >
               {st}
@@ -178,47 +164,47 @@ export const PlanDetails = () => {
           }
 
           return (
-            <div key={m.id} className="glass-panel p-6 space-y-4 hover:border-indigo-500/40 transition">
+            <div key={m.id} className="glass-panel p-6 space-y-4 border border-slate-200/20 hover:border-brand-500/50 transition shadow-lg">
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
+                    <span className="font-mono text-xs font-bold text-slate-9000 bg-brand-500/15 px-2 py-0.5 rounded border border-brand-500/30 shadow-inner">
                       {m.module_code}
                     </span>
-                    <h3 className="text-sm font-bold text-white">{m.title}</h3>
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                    <h3 className="text-sm font-bold text-slate-900">{m.title}</h3>
+                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-50 text-slate-600 border border-slate-200/20 shadow-inner">
                       {m.category}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-300">{m.purpose}</p>
+                  <p className="text-xs text-slate-600/80">{m.purpose}</p>
                 </div>
 
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="px-2.5 py-1 rounded bg-slate-950 font-semibold text-cyan-400 border border-slate-800">
+                  <span className="px-2.5 py-1 rounded bg-slate-50 font-semibold text-brand-600 border border-slate-200/20 shadow-inner">
                     Stage: {m.stage}
                   </span>
-                  <span className="px-2.5 py-1 rounded bg-slate-950 text-slate-400 border border-slate-800">
+                  <span className="px-2.5 py-1 rounded bg-slate-50 text-slate-600/70 border border-slate-200/20 shadow-inner">
                     {m.duration}
                   </span>
                 </div>
               </div>
 
               {/* Objectives & Concepts */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/80">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs bg-slate-50 p-3.5 rounded-xl border border-slate-200/20 shadow-inner">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-indigo-400 block mb-1">Learning Objectives</span>
-                  <ul className="list-disc pl-4 space-y-0.5 text-slate-300 text-[11px]">
+                  <span className="text-[10px] uppercase font-bold text-slate-9000 block mb-1">Learning Objectives</span>
+                  <ul className="list-disc pl-4 space-y-0.5 text-slate-600/90 text-[11px]">
                     {objectives?.map((obj, i) => (
                       <li key={i}>{obj}</li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-cyan-400 block mb-1">Source Grounding</span>
-                  <p className="text-slate-300 text-[11px]">
-                    Document: <strong className="text-white">{m.source_doc_code}</strong> ({m.source_section})
+                  <span className="text-[10px] uppercase font-bold text-brand-600 block mb-1">Source Grounding</span>
+                  <p className="text-slate-600/90 text-[11px]">
+                    Document: <strong className="text-slate-900">{m.source_doc_code}</strong> ({m.source_section})
                   </p>
-                  <p className="text-slate-400 text-[10px] mt-1">
+                  <p className="text-slate-600/60 text-[10px] mt-1">
                     Key Concepts: {concepts?.join(', ') || 'Domain Protocols'}
                   </p>
                 </div>

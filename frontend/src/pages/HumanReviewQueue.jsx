@@ -70,21 +70,21 @@ export const HumanReviewQueue = () => {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2.5">
-            <Inbox className="w-5 h-5 text-indigo-400" />
+          <h1 className="text-xl font-bold text-slate-950 tracking-tight flex items-center gap-2.5">
+            <Inbox className="w-5 h-5 text-brand-600" />
             Human Review Queue & Approval Workflow
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-600 mt-1">
             Review flagged plans, evaluate security warnings, and log authorized reviewer overrides with full auditability
           </p>
         </div>
       </div>
 
       {/* Reviews Table */}
-      <div className="glass-panel overflow-hidden">
+      <div className="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-300">
-            <thead className="bg-slate-950/80 text-slate-400 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-800">
+          <table className="w-full text-left text-xs text-slate-700">
+            <thead className="bg-slate-50 text-slate-500 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
               <tr>
                 <th className="px-5 py-3.5">Review Code</th>
                 <th className="px-5 py-3.5">Employee & Role</th>
@@ -95,7 +95,7 @@ export const HumanReviewQueue = () => {
                 <th className="px-5 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
                   <td colSpan="7" className="text-center py-12 text-slate-500">
@@ -110,27 +110,27 @@ export const HumanReviewQueue = () => {
                 </tr>
               ) : (
                 reviews.map((rev) => (
-                  <tr key={rev.id} className="hover:bg-slate-800/40 transition">
-                    <td className="px-5 py-3.5 font-mono font-bold text-indigo-400">
+                  <tr key={rev.id} className="hover:bg-slate-50/65 transition">
+                    <td className="px-5 py-3.5 font-mono font-bold text-brand-600">
                       {rev.review_code}
                     </td>
                     <td className="px-5 py-3.5 space-y-0.5">
-                      <div className="font-bold text-white">{rev.employee_name}</div>
-                      <div className="text-[11px] text-slate-400">{rev.role_name}</div>
+                      <div className="font-bold text-slate-900">{rev.employee_name}</div>
+                      <div className="text-[11px] text-slate-600">{rev.role_name}</div>
                     </td>
                     <td className="px-5 py-3.5">
                       <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
                         rev.risk_flag === 'high' || rev.risk_flag === 'critical'
-                          ? 'bg-rose-950 text-rose-300 border border-rose-800'
-                          : 'bg-amber-950 text-amber-300 border border-amber-800'
+                          ? 'bg-brand-50 text-brand-700 border border-slate-200'
+                          : 'bg-brand-50 text-brand-700 border border-slate-200'
                       }`}>
                         {rev.risk_flag}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-slate-200 max-w-xs font-medium">
+                    <td className="px-5 py-3.5 text-slate-800 max-w-xs font-medium">
                       {rev.flag_reason}
                     </td>
-                    <td className="px-5 py-3.5 text-indigo-300 font-mono text-[11px]">
+                    <td className="px-5 py-3.5 text-brand-700 font-mono text-[11px]">
                       {rev.source_reference}
                     </td>
                     <td className="px-5 py-3.5">
@@ -142,7 +142,7 @@ export const HumanReviewQueue = () => {
                           setSelectedReview(rev);
                           setActionType('approve');
                         }}
-                        className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold transition shadow"
+                        className="px-3 py-1.5 bg-brand-600 hover:bg-brand-500 text-white rounded-lg text-xs font-semibold transition shadow-sm"
                       >
                         Review
                       </button>
@@ -157,47 +157,47 @@ export const HumanReviewQueue = () => {
 
       {/* Action Modal */}
       {selectedReview && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="glass-panel max-w-lg w-full p-6 space-y-5">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div className="fixed inset-0 z-50 bg-slate-50/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-xl max-w-lg w-full p-6 space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
-                <h3 className="text-sm font-bold text-white">
+                <h3 className="text-sm font-bold text-slate-900">
                   Review & Decision: {selectedReview.review_code}
                 </h3>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-500">
                   {selectedReview.employee_name} ({selectedReview.role_name})
                 </p>
               </div>
               <button
                 onClick={() => setSelectedReview(null)}
-                className="text-slate-400 hover:text-white text-xs font-bold"
+                className="text-slate-600 hover:text-slate-700 text-xs font-bold"
               >
                 Close
               </button>
             </div>
 
-            <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-2 text-xs">
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-xs">
               <div>
                 <span className="text-[10px] text-slate-500 uppercase font-semibold block">Flag Reason</span>
-                <p className="text-amber-300 font-medium">{selectedReview.flag_reason}</p>
+                <p className="text-brand-800 font-medium">{selectedReview.flag_reason}</p>
               </div>
               <div>
                 <span className="text-[10px] text-slate-500 uppercase font-semibold block">Content Snippet</span>
-                <p className="text-slate-300 font-mono">{selectedReview.ai_content_preview}</p>
+                <p className="text-slate-700 font-mono">{selectedReview.ai_content_preview}</p>
               </div>
             </div>
 
             <form onSubmit={handleTakeAction} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">Decision Action</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">Decision Action</label>
                 <div className="grid grid-cols-4 gap-2">
                   <button
                     type="button"
                     onClick={() => setActionType('approve')}
                     className={`py-2 text-xs font-semibold rounded-lg border transition ${
                       actionType === 'approve'
-                        ? 'bg-emerald-600 border-emerald-500 text-white'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-800'
+                        ? 'bg-brand-600 border-brand-500 text-white'
+                        : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                     }`}
                   >
                     Approve
@@ -207,8 +207,8 @@ export const HumanReviewQueue = () => {
                     onClick={() => setActionType('override')}
                     className={`py-2 text-xs font-semibold rounded-lg border transition ${
                       actionType === 'override'
-                        ? 'bg-indigo-600 border-indigo-500 text-white'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-800'
+                        ? 'bg-brand-600 border-brand-500 text-white'
+                        : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                     }`}
                   >
                     Override
@@ -218,8 +218,8 @@ export const HumanReviewQueue = () => {
                     onClick={() => setActionType('edit')}
                     className={`py-2 text-xs font-semibold rounded-lg border transition ${
                       actionType === 'edit'
-                        ? 'bg-amber-600 border-amber-500 text-white'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-800'
+                        ? 'bg-brand-600 border-brand-500 text-white'
+                        : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                     }`}
                   >
                     Edit
@@ -229,8 +229,8 @@ export const HumanReviewQueue = () => {
                     onClick={() => setActionType('reject')}
                     className={`py-2 text-xs font-semibold rounded-lg border transition ${
                       actionType === 'reject'
-                        ? 'bg-rose-600 border-rose-500 text-white'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-800'
+                        ? 'bg-brand-600 border-brand-500 text-white'
+                        : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                     }`}
                   >
                     Reject
@@ -240,7 +240,7 @@ export const HumanReviewQueue = () => {
 
               {actionType === 'override' && (
                 <div>
-                  <label className="block text-xs font-semibold text-rose-400 mb-1">
+                  <label className="block text-xs font-semibold text-brand-700 mb-1">
                     Mandatory Reviewer Override Rationale (Logged in Audit Trail)
                   </label>
                   <textarea
@@ -249,26 +249,26 @@ export const HumanReviewQueue = () => {
                     placeholder="Provide detailed justification for overriding policy warning..."
                     value={overrideReason}
                     onChange={(e) => setOverrideReason(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950/70 border border-rose-900/60 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-rose-500"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-brand-500 shadow-inner"
                   ></textarea>
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Reviewer Note / Comment</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Reviewer Note / Comment</label>
                 <input
                   type="text"
                   placeholder="Optional review feedback..."
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-950/60 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-brand-600 shadow-inner"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={processing}
-                className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-indigo-600/30"
+                className="w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold transition shadow-md shadow-brand-600/20"
               >
                 {processing ? 'Logging Decision & Updating Plan...' : 'Confirm Decision & Log Audit Record'}
               </button>

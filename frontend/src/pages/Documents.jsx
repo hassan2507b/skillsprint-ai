@@ -105,15 +105,15 @@ export const Documents = () => {
   });
 
   return (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="space-y-6 animate-fadeIn bg-white rounded-2xl p-2">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2.5">
-            <Files className="w-5 h-5 text-indigo-400" />
+          <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
+            <Files className="w-5 h-5 text-brand-600" />
             Company Knowledge Sources & Document Repository
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Manage policies, SOPs, FAQs, and adversarial test documents with chunk traceability
           </p>
         </div>
@@ -122,7 +122,7 @@ export const Documents = () => {
             setShowUploadModal(true);
             setUploadFeedback(null);
           }}
-          className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-600/20 transition"
+          className="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-brand-600/20 transition"
         >
           <UploadCloud className="w-4 h-4" />
           Upload Document (PDF, DOCX, TXT)
@@ -130,15 +130,15 @@ export const Documents = () => {
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="glass-panel p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="border border-slate-200 bg-white p-4 rounded-xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="relative flex-1">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600" />
           <input
             type="text"
             placeholder="Search by Document ID, Title or File Name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-slate-950/60 border border-slate-800 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-500 focus:outline-none focus:border-brand-500"
           />
         </div>
 
@@ -146,7 +146,7 @@ export const Documents = () => {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-3 py-2 bg-slate-950/60 border border-slate-800 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-brand-500"
           >
             <option value="">All Categories</option>
             <option value="Policy">Policies</option>
@@ -160,7 +160,7 @@ export const Documents = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 bg-slate-950/60 border border-slate-800 rounded-xl text-xs text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-brand-500"
           >
             <option value="">All Statuses</option>
             <option value="active">Active</option>
@@ -171,10 +171,10 @@ export const Documents = () => {
       </div>
 
       {/* Documents Table */}
-      <div className="glass-panel overflow-hidden">
+      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-300">
-            <thead className="bg-slate-950/80 text-slate-400 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-800">
+          <table className="w-full text-left text-xs text-slate-700">
+            <thead className="bg-slate-50 text-slate-500 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
               <tr>
                 <th className="px-5 py-3.5">Doc ID</th>
                 <th className="px-5 py-3.5">Title & Category</th>
@@ -184,7 +184,7 @@ export const Documents = () => {
                 <th className="px-5 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-200">
               {loading ? (
                 <tr>
                   <td colSpan="6" className="text-center py-12 text-slate-500">
@@ -199,23 +199,23 @@ export const Documents = () => {
                 </tr>
               ) : (
                 filteredDocs.map((doc) => (
-                  <tr key={doc.id} className="hover:bg-slate-800/40 transition">
-                    <td className="px-5 py-3.5 font-mono font-bold text-indigo-400">
+                  <tr key={doc.id} className="hover:bg-slate-50 transition">
+                    <td className="px-5 py-3.5 font-mono font-bold text-brand-600">
                       {doc.doc_code}
                     </td>
                     <td className="px-5 py-3.5 space-y-0.5">
-                      <div className="font-bold text-white">{doc.title}</div>
-                      <div className="text-[11px] text-slate-400 flex items-center gap-2">
-                        <span className="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                      <div className="font-bold text-slate-900">{doc.title}</div>
+                      <div className="text-[11px] text-slate-500 flex items-center gap-2">
+                        <span className="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
                           {doc.category}
                         </span>
                         <span>{doc.file_name}</span>
                       </div>
                     </td>
-                    <td className="px-5 py-3.5 font-semibold text-slate-200">
+                    <td className="px-5 py-3.5 font-semibold text-slate-700">
                       v{doc.version}
                     </td>
-                    <td className="px-5 py-3.5 text-slate-400 uppercase">
+                    <td className="px-5 py-3.5 text-slate-500 uppercase">
                       {doc.file_type} • {Math.round((doc.file_size || 0) / 1024)} KB
                     </td>
                     <td className="px-5 py-3.5">
@@ -224,7 +224,7 @@ export const Documents = () => {
                     <td className="px-5 py-3.5 text-right space-x-2">
                       <Link
                         to={`/documents/${doc.id}`}
-                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white transition font-medium"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-brand-600 text-slate-700 hover:text-white transition font-medium"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         Inspect
@@ -232,13 +232,13 @@ export const Documents = () => {
                       <button
                         onClick={() => handleStatusToggle(doc)}
                         title="Toggle Active/Obsolete"
-                        className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 transition text-[11px]"
+                        className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition text-[11px]"
                       >
                         {doc.status === 'active' ? 'Archive' : 'Activate'}
                       </button>
                       <button
                         onClick={() => handleDelete(doc.id)}
-                        className="p-1.5 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-rose-950/30 transition"
+                        className="p-1.5 rounded-lg text-slate-500 hover:text-slate-9000 hover:bg-brand-50 transition"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -253,16 +253,16 @@ export const Documents = () => {
 
       {/* Upload Document Modal */}
       {showUploadModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="glass-panel max-w-lg w-full p-6 space-y-5">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <UploadCloud className="w-4 h-4 text-indigo-400" />
+        <div className="fixed inset-0 z-50 bg-white/20 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="max-w-lg w-full p-6 space-y-5 bg-white border border-slate-200 rounded-xl shadow-xl">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <UploadCloud className="w-4 h-4 text-brand-600" />
                 Upload New Company Document
               </h3>
               <button
                 onClick={() => setShowUploadModal(false)}
-                className="text-slate-400 hover:text-white text-xs font-bold"
+                className="text-slate-500 hover:text-slate-800 text-xs font-bold"
               >
                 Close
               </button>
@@ -272,8 +272,8 @@ export const Documents = () => {
               <div
                 className={`p-3.5 rounded-xl border text-xs space-y-1 ${
                   uploadFeedback.error
-                    ? 'bg-rose-950/50 border-rose-800 text-rose-300'
-                    : 'bg-emerald-950/50 border-emerald-800 text-emerald-300'
+                    ? 'bg-brand-50 border-slate-200 text-brand-700'
+                    : 'bg-brand-50 border-slate-200 text-brand-700'
                 }`}
               >
                 <div className="font-bold">
@@ -281,7 +281,7 @@ export const Documents = () => {
                 </div>
                 <div>{uploadFeedback.error || uploadFeedback.message}</div>
                 {uploadFeedback.adversarial_threats_detected > 0 && (
-                  <div className="text-amber-400 font-bold mt-1">
+                  <div className="text-brand-600 font-bold mt-1">
                     ⚠️ {uploadFeedback.adversarial_threats_detected} adversarial injection pattern(s) detected. Document quarantined.
                   </div>
                 )}
@@ -290,7 +290,7 @@ export const Documents = () => {
 
             <form onSubmit={handleFileUpload} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Select File (PDF, DOCX, TXT, MD, CSV)
                 </label>
                 <input
@@ -298,17 +298,17 @@ export const Documents = () => {
                   required
                   accept=".pdf,.docx,.txt,.md,.csv"
                   onChange={(e) => setSelectedFile(e.target.files[0])}
-                  className="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer bg-slate-950/60 p-2 border border-slate-800 rounded-xl"
+                  className="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-brand-600 file:text-white hover:file:bg-brand-500 cursor-pointer bg-slate-50 p-2 border border-slate-200 rounded-xl"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Category</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">Category</label>
                   <select
                     value={customCategory}
                     onChange={(e) => setCustomCategory(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950/60 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-brand-500"
                   >
                     <option value="Policy">Policy</option>
                     <option value="SOP">SOP</option>
@@ -319,12 +319,12 @@ export const Documents = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Version</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">Version</label>
                   <input
                     type="text"
                     value={customVersion}
                     onChange={(e) => setCustomVersion(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950/60 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-brand-500"
                   />
                 </div>
               </div>
@@ -332,7 +332,7 @@ export const Documents = () => {
               <button
                 type="submit"
                 disabled={uploading || !selectedFile}
-                className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-indigo-600/30"
+                className="w-full py-2.5 bg-brand-600 hover:bg-brand-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-brand-600/30"
               >
                 {uploading ? 'Parsing, Chunking & Validating...' : 'Upload and Ingest Document'}
               </button>
