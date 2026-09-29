@@ -7,7 +7,8 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 from backend.server import app
-
+# Allow your Netlify domain to talk to your Flask backend
+CORS(app, origins=["https://6abb60e1016355ab648586c1--skills-print-ai.netlify.app"])
 def main():
     print("=" * 75)
     print("SKILLSPRINT AI — ENTERPRISE DUAL-PIPELINE ONBOARDING PLATFORM")
