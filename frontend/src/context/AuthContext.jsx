@@ -13,7 +13,7 @@ const DEFAULT_USERS = {
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(() => {
     const saved = localStorage.getItem('skillsprint_user');
-    return saved ? JSON.parse(saved) : DEFAULT_USERS.admin;
+    return saved ? JSON.parse(saved) : null;
   });
 
   useEffect(() => {
@@ -25,12 +25,27 @@ export const AuthProvider = ({ children }) => {
   }, [currentUser]);
 
   const login = async (username, password) => {
+    // Intercept login for our 4 default test users
+    const mockUsers = {
+      'admin@test.com': DEFAULT_USERS.admin,
+      'reviewer@test.com': DEFAULT_USERS.reviewer,
+      'manager@test.com': DEFAULT_USERS.manager,
+      'employee@test.com': DEFAULT_USERS.employee,
+    };
+
+    if (mockUsers[username] && password === 'password123') {
+      const user = mockUsers[username];
+      setCurrentUser(user);
+      return { success: true, user: user };
+    }
+
+    // Fallback to backend API
     try {
       const res = await authService.login(username, password);
       setCurrentUser(res.data.user);
       return { success: true, user: res.data.user };
     } catch (err) {
-      return { success: false, error: err.response?.data?.detail || 'Login failed' };
+      return { success: false, error: err.response?.data?.detail || 'Invalid email or password' };
     }
   };
 

@@ -127,6 +127,10 @@ class DocumentParser:
             category = "Adversarial"
         elif "conflict" in filename.lower():
             category = "Conflict"
+        elif "employee process" in filename.lower() or "employee-process" in filename.lower() or "employee_process" in filename.lower():
+            category = "Employee Process"
+        elif "role" in filename.lower() or "responsibility" in filename.lower() or "job" in filename.lower():
+            category = "Role"
         elif "pol" in filename.lower() or "policy" in filename.lower():
             category = "Policy"
         elif "sop" in filename.lower():

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
-  Sparkles,
   Shield,
   User,
   Lock,
@@ -11,13 +10,14 @@ import {
   GraduationCap,
   Inbox
 } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 export const Login = () => {
   const { login, switchRole } = useAuth();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -57,8 +57,8 @@ export const Login = () => {
       <div className="max-w-md w-full space-y-6 relative z-10">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-500 to-brand-400 mx-auto flex items-center justify-center shadow-xl shadow-brand-500/20">
-            <Sparkles className="w-6 h-6 text-white" />
+          <div className="w-16 h-16 rounded-2xl bg-white mx-auto flex items-center justify-center shadow-xl shadow-brand-500/20 overflow-hidden border border-slate-100">
+            <img src={logo} alt="SkillSprint Logo" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
             SkillSprint <span className="text-slate-9000">AI</span>
@@ -78,11 +78,11 @@ export const Login = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-600/90 mb-1">Username</label>
+              <label className="block text-xs font-semibold text-slate-600/90 mb-1">Email</label>
               <div className="relative">
                 <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-600/50" />
                 <input
-                  type="text"
+                  type="email"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -115,61 +115,6 @@ export const Login = () => {
             </button>
           </form>
 
-          {/* Quick Login Switchers */}
-          <div className="pt-4 border-t border-slate-200/15 space-y-2">
-            <span className="text-[10px] uppercase font-bold text-slate-600/70 block text-center">
-              1-Click Instant Evaluator Logins:
-            </span>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('admin')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-brand-500/20 border border-slate-200/20 text-left transition flex items-center gap-2 shadow-inner"
-              >
-                <Shield className="w-3.5 h-3.5 text-slate-9000" />
-                <div>
-                  <div className="text-[11px] font-bold text-slate-900">Admin</div>
-                  <div className="text-[9px] text-slate-600/60">Full System Access</div>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('reviewer')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-brand-500/20 border border-slate-200/20 text-left transition flex items-center gap-2 shadow-inner"
-              >
-                <Inbox className="w-3.5 h-3.5 text-brand-600" />
-                <div>
-                  <div className="text-[11px] font-bold text-slate-900">Reviewer</div>
-                  <div className="text-[9px] text-slate-600/60">Review & Override</div>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('manager')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-brand-500/20 border border-slate-200/20 text-left transition flex items-center gap-2 shadow-inner"
-              >
-                <Briefcase className="w-3.5 h-3.5 text-brand-600" />
-                <div>
-                  <div className="text-[11px] font-bold text-slate-900">Manager</div>
-                  <div className="text-[9px] text-slate-600/60">Training & Plans</div>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('employee')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-brand-500/20 border border-slate-200/20 text-left transition flex items-center gap-2 shadow-inner"
-              >
-                <GraduationCap className="w-3.5 h-3.5 text-brand-600" />
-                <div>
-                  <div className="text-[11px] font-bold text-slate-900">Employee</div>
-                  <div className="text-[9px] text-slate-600/60">Abdul Raheem</div>
-                </div>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

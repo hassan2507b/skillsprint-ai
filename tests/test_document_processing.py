@@ -17,6 +17,15 @@ def test_document_parsing_txt():
     assert parsed["category"] == "Policy"
     assert "PPE" in parsed["content"]
 
+def test_document_parsing_process_categories():
+    process_text = b"""Document ID: DOC-PROC-001\nTitle: Employee Offboarding Process\nCategory: Employee Process\nVersion: 1.0\nSection: Section 1\n\nManagers must complete offboarding steps before final day."""
+    parsed = document_parser.parse_bytes("DOC-PROC-001.txt", process_text)
+    assert parsed["category"] == "Employee Process"
+
+    generic_process = b"""Document ID: DOC-PROC-002\nTitle: Expense Approval Process\nCategory: Process\nVersion: 2.0\nSection: Section 2\n\nApproval must be completed before reimbursement."""
+    parsed2 = document_parser.parse_bytes("DOC-PROC-002.txt", generic_process)
+    assert parsed2["category"] == "Process"
+
 def test_document_chunking():
     sample_doc = {
         "doc_id": "DOC-TEST-001",

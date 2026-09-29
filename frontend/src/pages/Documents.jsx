@@ -152,6 +152,8 @@ export const Documents = () => {
             <option value="Policy">Policies</option>
             <option value="SOP">Department SOPs</option>
             <option value="Handbook">Handbooks</option>
+            <option value="Role">Role</option>
+            <option value="Employee Process">Employee Process</option>
             <option value="FAQ">FAQs</option>
             <option value="Compliance">Compliance</option>
             <option value="Adversarial">Adversarial Test Files</option>
@@ -313,6 +315,8 @@ export const Documents = () => {
                     <option value="Policy">Policy</option>
                     <option value="SOP">SOP</option>
                     <option value="Handbook">Handbook</option>
+                    <option value="Role">Role</option>
+                    <option value="Employee Process">Employee Process</option>
                     <option value="FAQ">FAQ</option>
                     <option value="Compliance">Compliance</option>
                     <option value="Adversarial">Adversarial Test</option>

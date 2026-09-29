@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS documents (
     doc_code TEXT UNIQUE NOT NULL,
     file_name TEXT NOT NULL,
     title TEXT NOT NULL,
-    category TEXT NOT NULL CHECK(category IN ('Policy', 'SOP', 'Handbook', 'Process', 'FAQ', 'Compliance', 'Conflict', 'Adversarial')),
+    category TEXT NOT NULL,
     version TEXT NOT NULL,
     status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active', 'obsolete', 'draft', 'quarantined')),
     file_type TEXT NOT NULL DEFAULT 'txt',

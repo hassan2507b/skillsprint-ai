@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
-  Sparkles, 
   ChevronDown, 
   ShieldCheck, 
   Users, 
@@ -11,6 +10,7 @@ import {
   LogOut, 
   Check 
 } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 export const Navbar = () => {
   const { currentUser, switchRole, logout } = useAuth();
@@ -43,8 +43,8 @@ export const Navbar = () => {
       {/* Yahan max-w-5xl ki jagah max-w-full aur w-full kar diya hai taake design wahi rahe par poore page par phail jaye */}
       <nav className="w-full bg-white/95 backdrop-blur-xl border border-slate-200 rounded-full px-6 py-2.5 flex items-center justify-between shadow-lg shadow-slate-200/60 transition-all">
         <div className="flex items-center gap-3">
-          <Link to="/" className="w-9 h-9 rounded-full bg-brand-50 text-brand-700 flex items-center justify-center shadow-sm hover:scale-105 transition-transform">
-            <Sparkles className="w-4 h-4 fill-current text-brand-600" />
+          <Link to="/" className="w-9 h-9 rounded-full bg-brand-50 flex items-center justify-center shadow-sm hover:scale-105 transition-transform overflow-hidden">
+            <img src={logo} alt="SkillSprint Logo" className="w-full h-full object-cover" />
           </Link>
           <Link to="/" className="text-slate-900 font-bold text-sm tracking-tight flex items-center gap-2">
             SkillSprint

@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 class DocumentMetadata(BaseModel):
     doc_id: str = Field(..., description="Unique Document Code e.g. DOC-POL-001")
     title: str = Field(..., description="Title of document")
-    category: str = Field(..., description="Category: Policy, SOP, Handbook, Process, FAQ, Compliance, Adversarial")
+    category: str = Field(..., description="Category: Policy, SOP, Handbook, Process, Employee Process, FAQ, Compliance, Adversarial")
     version: str = Field("1.0", description="Version string e.g. 1.0 or 2.0")
     status: str = Field("active", description="active, obsolete, draft, quarantined")
     section: Optional[str] = "General"
