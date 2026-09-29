@@ -8,7 +8,7 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'https://skillsprint-ai-backend-1.onrender.com/',
+        target: 'https://skillsprintai.tech/',
         changeOrigin: true
       }
     }
