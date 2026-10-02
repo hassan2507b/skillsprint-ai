@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://skillsprintai.tech/api',
   headers: {
     'Content-Type': 'application/json',
   },
